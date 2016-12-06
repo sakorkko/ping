@@ -1,0 +1,8 @@
+*.iml
+/PingMe/.gradle
+/PingMe/local.properties
+.idea/
+/PingMe.DS_Store
+/PingMe/build
+/PingMe/captures
+/PingMe.externalNativeBuild
