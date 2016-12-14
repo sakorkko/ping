@@ -4,5 +4,6 @@
 .idea/
 /PingMe.DS_Store
 /PingMe/build
+/PingME/app/build
 /PingMe/captures
 /PingMe.externalNativeBuild
