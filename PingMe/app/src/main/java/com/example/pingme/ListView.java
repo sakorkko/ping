@@ -13,6 +13,6 @@ public class ListView extends AppCompatActivity {
         setContentView(R.layout.activity_list_view);
     }
 
-    public void openMap(View v) { startActivity(new Intent(ListView.this, MapsActivity.class)); }
+    public void openCreate(View v) { startActivity(new Intent(ListView.this, CreatePing.class)); }
     public void openStart(View v) { startActivity(new Intent(ListView.this, StartPage.class)); }
 }
