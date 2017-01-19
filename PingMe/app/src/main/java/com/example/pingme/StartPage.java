@@ -17,4 +17,5 @@ public class StartPage extends AppCompatActivity {
         startActivity(new Intent(StartPage.this, ListView.class));
     }
     public void openMap(View v) { startActivity(new Intent(StartPage.this, MapsActivity.class)); }
+
 }
