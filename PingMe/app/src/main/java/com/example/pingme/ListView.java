@@ -20,6 +20,6 @@ public class ListView extends  ListActivity {
         getListView().setAdapter(adapter);
     }
 
-    public void openMap(View v) { startActivity(new Intent(ListView.this, MapsActivity.class)); }
+    public void openCreate(View v) { startActivity(new Intent(ListView.this, CreatePing.class)); }
     public void openStart(View v) { startActivity(new Intent(ListView.this, StartPage.class)); }
 }
