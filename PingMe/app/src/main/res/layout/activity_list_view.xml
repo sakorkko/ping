@@ -37,12 +37,12 @@
         android:layout_alignParentStart="true"
         android:onClick="openMap"/>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ListView
+        android:id="@+id/mobile_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/button3"></LinearLayout>
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/button3" />
 
 </RelativeLayout>
