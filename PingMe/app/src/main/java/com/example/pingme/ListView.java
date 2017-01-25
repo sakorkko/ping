@@ -1,11 +1,10 @@
 package com.example.pingme;
 
-import android.app.ListActivity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.app.ListActivity;
 
 public class ListView extends  ListActivity {
 
@@ -14,10 +13,10 @@ public class ListView extends  ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
         String[] list = {"Wash my dog - John", "Walk my car - Dinglerberg"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(),
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, list);
-        ListView listView = (ListView) findViewById(R.id.mobile_list);
         getListView().setAdapter(adapter);
+
     }
 
     public void openCreate(View v) { startActivity(new Intent(ListView.this, CreatePing.class)); }
