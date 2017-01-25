@@ -14,6 +14,6 @@ public class CreatePing extends AppCompatActivity {
     }
 
     public void openStart(View v){ startActivity(new Intent(CreatePing.this, StartPage.class)); }
-    public void openList(View v){startActivity(new Intent(CreatePing.this, ListView.class));
+    public void openList(View v){startActivity(new Intent(CreatePing.this, PingList.class));
     }
 }
