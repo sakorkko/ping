@@ -38,4 +38,12 @@
         android:layout_alignParentStart="true"
         android:backgroundTint="@color/colorPrimary" />
 
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/pingMap"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/button3" />
+
 </RelativeLayout>
