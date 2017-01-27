@@ -15,9 +15,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class StartPage extends AppCompatActivity implements OnMapReadyCallback {
+
+public class StartPage extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     GoogleMap myMap;
 
@@ -65,10 +67,29 @@ public class StartPage extends AppCompatActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap mapster){
         myMap = mapster;
         goTo(65.0591924, 25.466295,15);         //sets the map to oulu university.
-        myMap.addMarker(new MarkerOptions().position(new LatLng(65.062766, 25.472340)).title("Hello world"));
-        myMap.addMarker(new MarkerOptions().position(new LatLng(65.055751, 25.472329)).title("Life is a set of cross-roads"));
-        myMap.addMarker(new MarkerOptions().position(new LatLng(65.059235, 25.469904)).title("Dormammu, I've come to bargain"));
+        String title1 = "Hello world";
+        String title2 = "Life is a set of cross-roads";
+        String title3 = "Dormammu, I've come to bargain";
+        Marker marker1 = myMap.addMarker(new MarkerOptions().position(new LatLng(65.062766, 25.472340)).title(title1));
+        Marker marker2 = myMap.addMarker(new MarkerOptions().position(new LatLng(65.055751, 25.472329)).title(title2));
+        Marker marker3 = myMap.addMarker(new MarkerOptions().position(new LatLng(65.059235, 25.469904)).title(title3));
+
+        marker1.setTag(title1);
+        marker2.setTag(title2);
+        marker3.setTag(title3);
+
+        myMap.setOnInfoWindowClickListener(this);
+
+
     }
+
+    public void onInfoWindowClick(Marker marker) {
+        final String selected = (String) marker.getTag();
+        Intent i = new Intent(getApplicationContext(), PingInfo.class);
+        i.putExtra("name", selected);
+        startActivity (i);
+    }
+
 
     public void goTo(double lat, double longi, int zoom){       //positions the map based on coordinates and zoom level
         LatLng spot = new LatLng(lat, longi);
