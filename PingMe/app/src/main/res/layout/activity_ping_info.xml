@@ -17,7 +17,9 @@
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="460dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        tools:background="@color/cast_intro_overlay_button_background_color"
+        android:textColor="@color/cast_expanded_controller_background_color"/>
 
     <TextView
         android:text="Contact info here"
@@ -27,8 +29,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="88dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="297dp" />
+        android:layout_marginBottom="274dp"
+        tools:background="@color/cast_intro_overlay_button_background_color"
+        android:textColor="@color/cast_expanded_controller_background_color"
+        android:layout_alignParentBottom="true" />
 
     <TextView
         android:text="Additional info here"
@@ -39,5 +43,7 @@
         android:layout_marginTop="184dp"
         android:id="@+id/textView3"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="106dp" />
+        android:layout_marginBottom="106dp"
+        tools:background="@color/cast_intro_overlay_button_background_color"
+        android:textColor="@color/cast_expanded_controller_background_color" />
 </RelativeLayout>
