@@ -26,12 +26,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.example.pingme.GpsTracker;
+import com.example.pingme.MapMaker;
 
 
-public class StartPage extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+public class StartPage extends AppCompatActivity{
 
-    private GoogleMap myMap;
-    private GpsTracker looker;
+    private MapMaker mapMine;
 
 
     @Override
@@ -43,8 +43,7 @@ public class StartPage extends AppCompatActivity implements OnMapReadyCallback, 
             if(!hasPermissions()){
                 cansIHasPermissons();
             }
-            looker = new GpsTracker(StartPage.this);
-            makeMap();
+            mapMine = new MapMaker(StartPage.this);
 
         }
         else{
@@ -54,10 +53,6 @@ public class StartPage extends AppCompatActivity implements OnMapReadyCallback, 
 
     }
 
-    private void makeMap(){
-        MapFragment frag =  (MapFragment) getFragmentManager().findFragmentById(R.id.pingMap);
-        frag.getMapAsync(this);
-    }
 
     public void openList(View v){
         startActivity(new Intent(StartPage.this, PingList.class));
@@ -66,7 +61,7 @@ public class StartPage extends AppCompatActivity implements OnMapReadyCallback, 
 
     public void mark(View v){
         String title1 = "MINE";
-        Marker marker = myMap.addMarker(new MarkerOptions().position(myMap.getCameraPosition().target).title(title1));
+        Marker marker = mapMine.myMap.addMarker(new MarkerOptions().position(mapMine.myMap.getCameraPosition().target).title(title1));
         marker.setTag(title1);
     }
 
@@ -86,64 +81,9 @@ public class StartPage extends AppCompatActivity implements OnMapReadyCallback, 
         return false;
     }
 
-    public void onMapReady(GoogleMap mapster){
-        myMap = mapster;
-
-        if(myMap != null){
-            myMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter(){
-
-                @Override
-                public View getInfoWindow(Marker marker) {
-                    return null;
-                }
-
-                @Override
-                public View getInfoContents(Marker marker) {
-                    View looker = getLayoutInflater().inflate(R.layout.info_screen, null);
-
-                    TextView window = (TextView) looker.findViewById(R.id.textView4);
-                    window.setText(marker.getTitle());
-
-                    return looker;
-                }
-            });
-        }
-
-        LatLng coordinates = new LatLng(looker.getLatitude(), looker.getLongitude());
-        LatLng university = new LatLng(65.0593186, 25.4662925);
-        goTo(university,15);         //sets the map to oulu university.
-        Log.d("Latitude", String.valueOf(looker.getLatitude()));
-        Log.d("Longitude", String.valueOf(looker.getLongitude()));
-        String title1 = "Hello world";
-        String title2 = "Life is a set of cross-roads";
-        String title3 = "Dormammu, I've come to bargain";
-        Marker marker1 = myMap.addMarker(new MarkerOptions().position(new LatLng(65.062766, 25.472340)).title(title1));
-        Marker marker2 = myMap.addMarker(new MarkerOptions().position(new LatLng(65.055751, 25.472329)).title(title2));
-        Marker marker3 = myMap.addMarker(new MarkerOptions().position(new LatLng(65.059235, 25.469904)).title(title3));
-
-        marker1.setTag(title1);
-        marker2.setTag(title2);
-        marker3.setTag(title3);
-
-        myMap.setOnInfoWindowClickListener(this);
-
-    }
 
 
 
-
-    public void onInfoWindowClick(Marker marker) {
-        final String selected = (String) marker.getTag();
-        Intent i = new Intent(getApplicationContext(), PingInfo.class);
-        i.putExtra("name", selected);
-        startActivity (i);
-    }
-
-
-    public void goTo(LatLng spot, int zoom){       //positions the map based on coordinates and zoom level
-        CameraUpdate upper = CameraUpdateFactory.newLatLngZoom(spot, zoom);
-        myMap.moveCamera(upper);
-    }
 
     private boolean hasPermissions(){
         int result = 0;
