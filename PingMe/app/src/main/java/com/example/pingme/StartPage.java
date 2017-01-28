@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.Manifest;
 
@@ -81,6 +82,27 @@ public class StartPage extends AppCompatActivity implements OnMapReadyCallback, 
 
     public void onMapReady(GoogleMap mapster){
         myMap = mapster;
+
+        if(myMap != null){
+            myMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter(){
+
+                @Override
+                public View getInfoWindow(Marker marker) {
+                    return null;
+                }
+
+                @Override
+                public View getInfoContents(Marker marker) {
+                    View looker = getLayoutInflater().inflate(R.layout.info_screen, null);
+
+                    TextView window = (TextView) looker.findViewById(R.id.textView4);
+                    window.setText(marker.getTitle());
+
+                    return looker;
+                }
+            });
+        }
+
         LatLng coordinates = new LatLng(looker.getLatitude(), looker.getLongitude());
         LatLng university = new LatLng(65.0593186, 25.4662925);
         goTo(university,15);         //sets the map to oulu university.
