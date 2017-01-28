@@ -101,6 +101,10 @@ public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.
         myMap.moveCamera(upper);
     }
 
+    public Marker setMark(String title){
+        Marker marker = myMap.addMarker(new MarkerOptions().position(myMap.getCameraPosition().target).title(title));
+        return marker;
+    }
 
 
 }

@@ -61,7 +61,7 @@ public class StartPage extends AppCompatActivity{
 
     public void mark(View v){
         String title1 = "MINE";
-        Marker marker = mapMine.myMap.addMarker(new MarkerOptions().position(mapMine.myMap.getCameraPosition().target).title(title1));
+        Marker marker = mapMine.setMark(title1);
         marker.setTag(title1);
     }
 
