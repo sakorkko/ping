@@ -64,6 +64,12 @@ public class StartPage extends AppCompatActivity implements OnMapReadyCallback, 
     }
     public void openCreate(View v) { startActivity(new Intent(StartPage.this, CreatePing.class)); }
 
+    public void mark(View v){
+        String title1 = "MINE";
+        Marker marker = myMap.addMarker(new MarkerOptions().position(myMap.getCameraPosition().target).title(title1));
+        marker.setTag(title1);
+    }
+
     public boolean googleServicesWork(){        // checks that google services are installed
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
         int working = api.isGooglePlayServicesAvailable(this);
@@ -120,7 +126,6 @@ public class StartPage extends AppCompatActivity implements OnMapReadyCallback, 
         marker3.setTag(title3);
 
         myMap.setOnInfoWindowClickListener(this);
-
 
     }
 
