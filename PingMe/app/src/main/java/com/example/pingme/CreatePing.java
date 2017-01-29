@@ -30,6 +30,7 @@ public class CreatePing extends AppCompatActivity {
     public void mark(View v){
         String title1 = "MINE";
         mapMine.setMark(title1);
+        startActivity(new Intent(CreatePing.this, pop_up.class));
 
     }
 }
