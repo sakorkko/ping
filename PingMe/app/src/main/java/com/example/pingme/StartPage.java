@@ -5,25 +5,18 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.Manifest;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
+
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+
+
 
 import com.example.pingme.GpsTracker;
 import com.example.pingme.MapMaker;
@@ -32,6 +25,9 @@ import com.example.pingme.MapMaker;
 public class StartPage extends AppCompatActivity{
 
     private MapMaker mapMine;
+    String[] titles = {"Hello world","Life is a set of cross-roads","Dormammu, I've come to bargain"};
+    LatLng[] ll = {new LatLng(65.062766, 25.472340),new LatLng(65.055751, 25.472329),new LatLng(65.059235, 25.469904)};
+
 
 
     @Override
@@ -44,13 +40,11 @@ public class StartPage extends AppCompatActivity{
                 cansIHasPermissons();
             }
             int id = R.id.pingMap;
-            mapMine = new MapMaker(StartPage.this, id);
-
+            mapMine = new MapMaker(StartPage.this, id, titles, ll);
         }
         else{
             // no map
         }
-
 
     }
 
@@ -60,11 +54,7 @@ public class StartPage extends AppCompatActivity{
     }
     public void openCreate(View v) { startActivity(new Intent(StartPage.this, CreatePing.class)); }
 
-    public void mark(View v){
-        String title1 = "MINE";
-        Marker marker = mapMine.setMark(title1);
-        marker.setTag(title1);
-    }
+
 
     public boolean googleServicesWork(){        // checks that google services are installed
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();

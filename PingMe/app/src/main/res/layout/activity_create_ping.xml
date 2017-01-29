@@ -75,6 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="23dp"
         android:id="@+id/button4"
+        android:onClick="mark"
         android:backgroundTint="@android:color/holo_green_light"
         android:layout_above="@+id/button2"
         android:layout_toStartOf="@+id/button2" />

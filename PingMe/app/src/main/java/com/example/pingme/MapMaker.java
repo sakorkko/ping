@@ -31,15 +31,19 @@ import com.example.pingme.GpsTracker;
 
 public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
-    public GoogleMap myMap;
+    private GoogleMap myMap;
     private GpsTracker looker;
     private Context mCont;
     private Activity original;
+    private LatLng[] lats;
+    private String[] titles;
 
-    public MapMaker(Context cont, int id){
+    public MapMaker(Context cont, int id, String[] strings, LatLng[] latlngs){
         mCont = cont;
         looker = new GpsTracker(cont);
         original = (Activity) cont;
+        lats = latlngs;
+        titles = strings;
         MapFragment frag =  (MapFragment) original.getFragmentManager().findFragmentById(id);
         frag.getMapAsync(this);
 
@@ -74,20 +78,15 @@ public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.
         goTo(university,15);         //sets the map to oulu university.
         Log.d("Latitude", String.valueOf(looker.getLatitude()));
         Log.d("Longitude", String.valueOf(looker.getLongitude()));
-        String title1 = "Hello world";
-        String title2 = "Life is a set of cross-roads";
-        String title3 = "Dormammu, I've come to bargain";
-        Marker marker1 = myMap.addMarker(new MarkerOptions().position(new LatLng(65.062766, 25.472340)).title(title1));
-        Marker marker2 = myMap.addMarker(new MarkerOptions().position(new LatLng(65.055751, 25.472329)).title(title2));
-        Marker marker3 = myMap.addMarker(new MarkerOptions().position(new LatLng(65.059235, 25.469904)).title(title3));
 
-        marker1.setTag(title1);
-        marker2.setTag(title2);
-        marker3.setTag(title3);
+        for (int i = 0; i < titles.length; i++ ){
+            setMarkThere(titles[i], lats[i]);
+        }
 
         myMap.setOnInfoWindowClickListener(this);
-
+        Log.d("MapStatus", "ready");
     }
+
 
     public void onInfoWindowClick(Marker marker) {
         final String selected = (String) marker.getTag();
@@ -102,10 +101,16 @@ public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.
         myMap.moveCamera(upper);
     }
 
-    public Marker setMark(String title){
+    public void setMark(String title){
         Marker marker = myMap.addMarker(new MarkerOptions().position(myMap.getCameraPosition().target).title(title));
-        return marker;
+        marker.setTag(title);
     }
+
+    public void setMarkThere(String title, LatLng ll){
+        Marker marker =  myMap.addMarker(new MarkerOptions().position(ll).title(title));
+        marker.setTag(title);
+    }
+
 
 
 }

@@ -33,16 +33,6 @@
                 android:id="@+id/pingMap"
                 android:layout_weight="1" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/cross_map"
-                android:id="@+id/imageView"
-                android:layout_weight="1"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:scaleX="1"
-                android:scaleY="1" />
         </RelativeLayout>
 
         <LinearLayout
@@ -77,15 +67,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:text="Mark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button6"
-        android:onClick="mark"
-        android:layout_weight="0.1"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
