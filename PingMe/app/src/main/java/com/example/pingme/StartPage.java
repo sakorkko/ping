@@ -43,7 +43,8 @@ public class StartPage extends AppCompatActivity{
             if(!hasPermissions()){
                 cansIHasPermissons();
             }
-            mapMine = new MapMaker(StartPage.this);
+            int id = R.id.pingMap;
+            mapMine = new MapMaker(StartPage.this, id);
 
         }
         else{

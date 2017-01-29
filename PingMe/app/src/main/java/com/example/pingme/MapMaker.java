@@ -36,12 +36,13 @@ public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.
     private Context mCont;
     private Activity original;
 
-    public MapMaker(Context cont){
+    public MapMaker(Context cont, int id){
         mCont = cont;
         looker = new GpsTracker(cont);
         original = (Activity) cont;
-        MapFragment frag =  (MapFragment) original.getFragmentManager().findFragmentById(R.id.pingMap);
+        MapFragment frag =  (MapFragment) original.getFragmentManager().findFragmentById(id);
         frag.getMapAsync(this);
+
     }
 
     @Override
