@@ -16,10 +16,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import com.google.android.gms.maps.model.LatLng;
 
-
-
-import com.example.pingme.GpsTracker;
-import com.example.pingme.MapMaker;
+import com.example.p ngme.MapMaker;
 
 
 public class StartPage extends AppCompatActivity{
