@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">PingMe</string>
+    <string name="quickstart_message">Click the Send Test Ping button below to send a test ping. Messages sent will be received by the app. The LOG TOKEN button logs the
+        InstanceID token to logcat.</string>
+    <string name="send_ping">Send Test Ping</string>
+    <string name="log_token">Log Token</string>
+
+    <string name="msg_subscribed">Subscribed to news topic</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+
+    <string name="latitude_label">Latitude</string>
+    <string name="longitude_label">Longitude</string>
+
+    <string name="no_location_detected">
+        No location detected. Make sure location is enabled on the device.
+    </string>
 </resources>

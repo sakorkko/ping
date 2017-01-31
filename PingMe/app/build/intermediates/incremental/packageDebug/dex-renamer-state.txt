@@ -1,0 +1,7 @@
+#Tue Jan 31 15:30:43 EET 2017
+base.0=/home/somnic/projects/pingme_new/ping/PingMe/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_fed6006363325714fa53b6b64e732d5ee7592e21
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=/home/somnic/projects/pingme_new/ping/PingMe/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_e3d0c91ddee4780936cc5f8c890281961a5de939/classes.dex
+base.1=/home/somnic/projects/pingme_new/ping/PingMe/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_e3d0c91ddee4780936cc5f8c890281961a5de939
+file.0=/home/somnic/projects/pingme_new/ping/PingMe/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_fed6006363325714fa53b6b64e732d5ee7592e21/classes.dex

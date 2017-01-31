@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "168171534215",
+    "firebase_url": "https://pingme-17f8f.firebaseio.com",
+    "project_id": "pingme-17f8f",
+    "storage_bucket": "pingme-17f8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168171534215:android:4c6aaace3e4e8416",
+        "android_client_info": {
+          "package_name": "com.example.pingme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168171534215-05a9eq9qppp84bvvghr8dom1i6bb71k7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv2b0Ru5n-hI8oN9oeNwn1bb2Kp4SMv9g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
