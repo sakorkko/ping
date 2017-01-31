@@ -36,10 +36,16 @@ public class Pings {
     }
 
     private int generateId(Pings[] list){
-        int length = list.length-1;
+        int length;
+        if (list == null){
+            return 0;
+        }
+        else {
+            length = list.length - 1;
+        }
         Pings onePing = list[length];
         int id = onePing.getId();
-        id = id +1;
+        id = id + 1;
         return id;
     }
 

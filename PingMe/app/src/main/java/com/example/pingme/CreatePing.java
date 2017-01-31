@@ -15,10 +15,6 @@ import com.google.android.gms.maps.model.Marker;
 public class CreatePing extends AppCompatActivity {
 
     private MapMaker mapMine;
-    private EditText text1;     //title
-    private EditText text2;     //adittional info
-    private LatLng pingPosition;    //position
-    private String[] myMessage; //string of the message to be sent
 
 
     @Override
@@ -29,7 +25,7 @@ public class CreatePing extends AppCompatActivity {
 
         String[] empty = {};
         LatLng[] empty2 = {};
-        mapMine = new MapMaker(CreatePing.this, id, empty, empty2);
+        mapMine = new MapMaker(CreatePing.this, id, empty, empty2);     //creates empty map
     }
 
     public void openStart(View v){
@@ -40,7 +36,7 @@ public class CreatePing extends AppCompatActivity {
     }
 
 
-    public void mark(View v){
+    public void mark(View v){           //starts a pop_up
         Intent i = new Intent(this, pop_up.class);
         final int result = 1;
         startActivityForResult(i, result);
@@ -48,13 +44,13 @@ public class CreatePing extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {     //result from the pop_up
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
             EditText title = (EditText) findViewById(R.id.editText);
-            String head = String.valueOf(title);
+            String head = String.valueOf(title.getText());
             EditText info = (EditText) findViewById(R.id.editText3);
-            String additionalInfo = String.valueOf(info);
+            String additionalInfo = String.valueOf(info.getText());
             LatLng position = mapMine.getPosition();
             String location = String.valueOf(position.latitude) + ":" + String.valueOf(position.longitude);
             Bundle extras = new Bundle();
