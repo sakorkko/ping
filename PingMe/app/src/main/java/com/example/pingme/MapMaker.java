@@ -72,10 +72,10 @@ public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.
                 }
             });
         }
-
+        looker.getLocation();
         LatLng coordinates = new LatLng(looker.getLatitude(), looker.getLongitude());
         LatLng university = new LatLng(65.0593186, 25.4662925);
-        goTo(university,15);         //sets the map to oulu university.
+        goTo(coordinates,15);         //sets the map to oulu university.
         Log.d("Latitude", String.valueOf(looker.getLatitude()));
         Log.d("Longitude", String.valueOf(looker.getLongitude()));
 
@@ -109,6 +109,10 @@ public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.
     public void setMarkThere(String title, LatLng ll){
         Marker marker =  myMap.addMarker(new MarkerOptions().position(ll).title(title));
         marker.setTag(title);
+    }
+
+    public LatLng getPosition(){
+        return myMap.getCameraPosition().target;
     }
 
 

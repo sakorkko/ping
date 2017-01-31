@@ -35,7 +35,6 @@ public class StartPage extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         if (googleServicesWork()){
             setContentView(R.layout.activity_start_page);
-            Toast.makeText(this, "YAY", Toast.LENGTH_LONG).show();
             if(!hasPermissions()){
                 cansIHasPermissons();
             }
@@ -45,14 +44,27 @@ public class StartPage extends AppCompatActivity{
         else{
             // no map
         }
-
+        Intent intent = getIntent();
+        if(intent.hasExtra("Title")) {
+            Bundle extras = intent.getExtras();
+            String title = extras.getString("Title");
+            String info = extras.getString("Info");
+            String location = extras.getString("Position");
+            String[] parts = location.split(":");
+            String Latitude = parts[0];
+            String Longitude = parts[1];
+            Toast.makeText(this, "Latitude:" + Latitude + "\nLongitude:" + Longitude, Toast.LENGTH_LONG).show();
+            double lat = Double.parseDouble(Latitude);
+            double lon = Double.parseDouble(Longitude);
+        }
     }
 
 
     public void openList(View v){
         startActivity(new Intent(StartPage.this, PingList.class));
     }
-    public void openCreate(View v) { startActivity(new Intent(StartPage.this, CreatePing.class)); }
+    public void openCreate(View v) { startActivity(new Intent(StartPage.this, CreatePing.class));
+    }
 
 
 

@@ -31,6 +31,10 @@ public class PingList extends ListActivity {
         );
     }
 
-    public void openCreate(View v) { startActivity(new Intent(PingList.this, CreatePing.class)); }
-    public void openStart(View v) { startActivity(new Intent(PingList.this, StartPage.class)); }
+    public void openCreate(View v) { startActivity(new Intent(PingList.this, CreatePing.class));
+        finish();
+    }
+    public void openStart(View v) {
+        finish();
+    }
 }
