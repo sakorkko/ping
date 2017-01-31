@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.example.pingme.GpsTracker;
 
-public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+public class MapMaker extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap myMap;
     private GpsTracker looker;
