@@ -15,6 +15,10 @@ import com.google.android.gms.maps.model.Marker;
 public class CreatePing extends AppCompatActivity {
 
     private MapMaker mapMine;
+    private EditText text1;     //title
+    private EditText text2;     //adittional info
+    private LatLng pingPosition;    //position
+    private String[] myMessage; //string of the message to be sent
 
 
     @Override
@@ -22,6 +26,7 @@ public class CreatePing extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ping);
         int id = R.id.creatorMap;
+
         String[] empty = {};
         LatLng[] empty2 = {};
         mapMine = new MapMaker(CreatePing.this, id, empty, empty2);
@@ -33,6 +38,7 @@ public class CreatePing extends AppCompatActivity {
     public void openList(View v){startActivity(new Intent(CreatePing.this, PingList.class));
         finish();
     }
+
 
     public void mark(View v){
         Intent i = new Intent(this, pop_up.class);
@@ -61,4 +67,5 @@ public class CreatePing extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
 }

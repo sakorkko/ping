@@ -75,7 +75,9 @@ public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.
         looker.getLocation();
         LatLng coordinates = new LatLng(looker.getLatitude(), looker.getLongitude());
         LatLng university = new LatLng(65.0593186, 25.4662925);
-        goTo(coordinates,15);         //sets the map to oulu university.
+        goTo(coordinates,15);         //sets the map current position
+
+
         Log.d("Latitude", String.valueOf(looker.getLatitude()));
         Log.d("Longitude", String.valueOf(looker.getLongitude()));
 
@@ -88,7 +90,7 @@ public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.
     }
 
 
-    public void onInfoWindowClick(Marker marker) {
+    public void onInfoWindowClick(Marker marker) {      //when clicking on marker info box
         final String selected = (String) marker.getTag();
         Intent i = new Intent(mCont, PingInfo.class);
         i.putExtra("name", selected);
@@ -101,12 +103,12 @@ public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.
         myMap.moveCamera(upper);
     }
 
-    public void setMark(String title){
+    public void setMark(String title){      //set marker on the camerea position
         Marker marker = myMap.addMarker(new MarkerOptions().position(myMap.getCameraPosition().target).title(title));
         marker.setTag(title);
     }
 
-    public void setMarkThere(String title, LatLng ll){
+    public void setMarkThere(String title, LatLng ll){      //set marker on specific coordinates
         Marker marker =  myMap.addMarker(new MarkerOptions().position(ll).title(title));
         marker.setTag(title);
     }
