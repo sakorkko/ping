@@ -39,25 +39,35 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
     private LatLng[] lats;
     private String[] titles;
     private LatLng coordinates;
+    private boolean clickable = true;
+    private String infoTitle;
 
-    public MapMaker(Context cont, int id, String[] strings, LatLng[] latlngs){
+    public MapMaker(Context cont, boolean draw, int id){
         mCont = cont;
         looker = new GpsTracker(cont);
         original = (Activity) cont;
-        lats = latlngs;
-        titles = strings;
+        if(draw) {
+            lats = PingHandler.getInstance().getLocations();
+            titles = PingHandler.getInstance().getTitles();
+        }
+        else {
+            lats = new LatLng[0];
+            titles = new String[0];
+        }
         MapFragment frag =  (MapFragment) original.getFragmentManager().findFragmentById(id);
         frag.getMapAsync(this);
 
     }
 
-    public MapMaker(Context cont, int id, String[] strings, LatLng[] latlngs, LatLng coordinate){
+    public MapMaker(Context cont, LatLng coordinate, String title, int id){           //constructor for ping info activity
         mCont = cont;
         looker = new GpsTracker(cont);
         original = (Activity) cont;
-        lats = latlngs;
-        titles = strings;
+        lats = new LatLng[0];
+        titles = new String[0];
+        infoTitle = title;
         coordinates = coordinate;
+        clickable = false;
         MapFragment frag =  (MapFragment) original.getFragmentManager().findFragmentById(id);
         frag.getMapAsync(this);
 
@@ -91,7 +101,7 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
             coordinates = new LatLng(looker.getLatitude(), looker.getLongitude());
         }
         else{
-            setMarkThere("here", 0, coordinates);
+            setMarkThere(infoTitle, 0, coordinates);
         }
         LatLng university = new LatLng(65.0593186, 25.4662925);
         goTo(coordinates,15);         //sets the map current position
@@ -104,7 +114,9 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
             setMarkThere(titles[i], i, lats[i]);
         }
 
-        myMap.setOnInfoWindowClickListener(this);
+        if(clickable) {         //if map is on ping info activity, info click shouldn't work
+            myMap.setOnInfoWindowClickListener(this);
+        }
         Log.d("MapStatus", "ready");
     }
 

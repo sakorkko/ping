@@ -23,9 +23,7 @@ public class CreatePing extends AppCompatActivity {
         setContentView(R.layout.activity_create_ping);
         int id = R.id.creatorMap;
 
-        String[] empty = {};
-        LatLng[] empty2 = {};
-        mapMine = new MapMaker(CreatePing.this, id, empty, empty2);     //creates empty map
+        mapMine = new MapMaker(CreatePing.this, false, id);     //creates empty map
     }
 
     public void openStart(View v){
@@ -52,13 +50,12 @@ public class CreatePing extends AppCompatActivity {
             EditText info = (EditText) findViewById(R.id.editText3);
             String additionalInfo = String.valueOf(info.getText());
             LatLng position = mapMine.getPosition();
-            String location = String.valueOf(position.latitude) + ":" + String.valueOf(position.longitude);
-            Bundle extras = new Bundle();
-            extras.putString("Title",head);
-            extras.putString("Info",additionalInfo);
-            extras.putString("Position",location);
+
+
+
+            PingHandler.getInstance().addPing(head, additionalInfo, position);
+
             Intent intent = new Intent(CreatePing.this, StartPage.class);
-            intent.putExtras(extras);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }

@@ -24,8 +24,6 @@ import com.example.pingme.PingHandler;
 public class StartPage extends AppCompatActivity{
 
     private MapMaker mapMine;
-    String[] titles = {};
-    LatLng[] lls = {};
     PingHandler pingHandler = PingHandler.getInstance();
 
 
@@ -40,29 +38,7 @@ public class StartPage extends AppCompatActivity{
                 cansIHasPermissons();
             }
 
-            Intent intent = getIntent();
-            if(intent.hasExtra("Title")) {                  // if hasextra true, then create ping has been used and app shouls udate ping list
-
-                Bundle extras = intent.getExtras();
-                String title = extras.getString("Title");
-                String info = extras.getString("Info");
-                String location = extras.getString("Position");
-
-
-                String[] parts = location.split(":");
-                String Latitude = parts[0];
-                String Longitude = parts[1];
-
-                double lat = Double.parseDouble(Latitude);
-                double lon = Double.parseDouble(Longitude);
-
-                LatLng ll = new LatLng(lat, lon);
-                pingHandler.addPing(title, info, ll);   //creates new ping to the list
-
-            }
-            titles =  pingHandler.getTitles();
-            lls = pingHandler.getLocations();
-            mapMine = new MapMaker(StartPage.this, id, titles, lls);     //sets up map
+            mapMine = new MapMaker(StartPage.this, true, id);     //sets up map
         }
         else{
             // no map
