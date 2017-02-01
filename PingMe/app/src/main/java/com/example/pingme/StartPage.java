@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import com.example.pingme.MapMaker;
 import com.example.pingme.Pings;
+import com.example.pingme.PingHandler;
 
 
 public class StartPage extends AppCompatActivity{
@@ -25,7 +26,7 @@ public class StartPage extends AppCompatActivity{
     private MapMaker mapMine;
     String[] titles = {};
     LatLng[] lls = {};
-    private Pings[] pinglist;
+    PingHandler pingHandler = PingHandler.getInstance();
 
 
 
@@ -56,26 +57,11 @@ public class StartPage extends AppCompatActivity{
                 double lon = Double.parseDouble(Longitude);
 
                 LatLng ll = new LatLng(lat, lon);
-                Pings newPing = new Pings(title, info, ll, pinglist);   //creates new ping
-                int size;
-                if (pinglist == null){
-                    size = 0;
-                }else {
-                    size = pinglist.length-1;
-                }
-                Pings[] spare = new Pings[size+1];        //new list that has room for the new ping;
-                for(int i = 0; i< size; i++) {
-                    spare[i] = pinglist[i];
-                }
-                spare[size] = newPing;
-                pinglist = spare;
-                titles = new String[size+1];            //sets lists for the map maker
-                lls = new LatLng[size +1];
-                for(int i = 0; i<size+1; i++){
-                    titles[i] = pinglist[i].getTitle();
-                    lls[i] = pinglist[i].getPosition();
-                }
+                pingHandler.addPing(title, info, ll);   //creates new ping to the list
+
             }
+            titles =  pingHandler.getTitles();
+            lls = pingHandler.getLocations();
             mapMine = new MapMaker(StartPage.this, id, titles, lls);     //sets up map
         }
         else{

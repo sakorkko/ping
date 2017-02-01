@@ -15,7 +15,7 @@ public class PingList extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping_list);
         ListView listView1 = (ListView) findViewById(android.R.id.list);
-        String[] list = {"Wash my dog - John", "Walk my car - Dinglerberg"};
+        String[] list = PingHandler.getInstance().getTitles();
         ArrayAdapter adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, list);
         listView1.setAdapter(adapter);
@@ -25,6 +25,8 @@ public class PingList extends ListActivity {
                 Log.d("PASSER", selected);
                 Intent i = new Intent(getApplicationContext(), PingInfo.class);
                 i.putExtra("name", selected);
+                i.putExtra("info", PingHandler.getInstance().getInfos()[position]);
+                i.putExtra("id", String.valueOf(position));
                 startActivity (i);
             }
         }

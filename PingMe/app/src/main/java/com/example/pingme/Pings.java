@@ -37,7 +37,7 @@ public class Pings {
 
     private int generateId(Pings[] list){
         int length;
-        if (list == null){
+        if (list.length == 0){
             return 0;
         }
         else {

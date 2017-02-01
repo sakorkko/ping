@@ -38,6 +38,7 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
     private Activity original;
     private LatLng[] lats;
     private String[] titles;
+    private LatLng coordinates;
 
     public MapMaker(Context cont, int id, String[] strings, LatLng[] latlngs){
         mCont = cont;
@@ -45,6 +46,18 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         original = (Activity) cont;
         lats = latlngs;
         titles = strings;
+        MapFragment frag =  (MapFragment) original.getFragmentManager().findFragmentById(id);
+        frag.getMapAsync(this);
+
+    }
+
+    public MapMaker(Context cont, int id, String[] strings, LatLng[] latlngs, LatLng coordinate){
+        mCont = cont;
+        looker = new GpsTracker(cont);
+        original = (Activity) cont;
+        lats = latlngs;
+        titles = strings;
+        coordinates = coordinate;
         MapFragment frag =  (MapFragment) original.getFragmentManager().findFragmentById(id);
         frag.getMapAsync(this);
 
@@ -74,7 +87,12 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
             });
         }
         looker.getLocation();
-        LatLng coordinates = new LatLng(looker.getLatitude(), looker.getLongitude());
+        if (coordinates == null) {
+            coordinates = new LatLng(looker.getLatitude(), looker.getLongitude());
+        }
+        else{
+            setMarkThere("here", 0, coordinates);
+        }
         LatLng university = new LatLng(65.0593186, 25.4662925);
         goTo(coordinates,15);         //sets the map current position
 
@@ -83,7 +101,7 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         Log.d("Longitude", String.valueOf(looker.getLongitude()));
 
         for (int i = 0; i < titles.length; i++ ){
-            setMarkThere(titles[i], lats[i]);
+            setMarkThere(titles[i], i, lats[i]);
         }
 
         myMap.setOnInfoWindowClickListener(this);
@@ -95,6 +113,11 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         final String selected = (String) marker.getTag();
         Intent i = new Intent(mCont, PingInfo.class);
         i.putExtra("name", selected);
+        String snippet = marker.getSnippet();
+        i.putExtra("id", snippet);
+        int id = Integer.parseInt(snippet);
+        snippet = PingHandler.getInstance().getInfos()[id];
+        i.putExtra("info", snippet);
         mCont.startActivity (i);
     }
 
@@ -109,8 +132,8 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         marker.setTag(title);
     }
 
-    public void setMarkThere(String title, LatLng ll){      //set marker on specific coordinates
-        Marker marker =  myMap.addMarker(new MarkerOptions().position(ll).title(title));
+    public void setMarkThere(String title, int id,LatLng ll){      //set marker on specific coordinates
+        Marker marker =  myMap.addMarker(new MarkerOptions().position(ll).title(title).snippet(String.valueOf(id)));
         marker.setTag(title);
     }
 
