@@ -16,22 +16,38 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:weightSum="1"
-        android:layout_below="@+id/button6"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.9">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <fragment
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:name="com.google.android.gms.maps.MapFragment"
                 android:id="@+id/pingMap"
-                android:layout_weight="1" />
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1"
+                android:gravity="center_horizontal">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:src="@mipmap/title3"
+                    android:id="@+id/imageView6"
+                    android:layout_weight="0.5"
+                    android:adjustViewBounds="true" />
+            </LinearLayout>
 
         </RelativeLayout>
 
@@ -39,12 +55,12 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.10">
+            android:layout_weight="0.1">
 
             <Button
                 android:text="Map"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/button7"
                 android:backgroundTint="@color/colorPrimary"
                 android:layout_weight="1" />

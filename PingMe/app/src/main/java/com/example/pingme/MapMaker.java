@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.example.pingme.GpsTracker;
 
-public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+public class MapMaker extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap myMap;
     private GpsTracker looker;
@@ -37,13 +38,36 @@ public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.
     private Activity original;
     private LatLng[] lats;
     private String[] titles;
+    private LatLng coordinates;
+    private boolean clickable = true;
+    private String infoTitle;
 
-    public MapMaker(Context cont, int id, String[] strings, LatLng[] latlngs){
+    public MapMaker(Context cont, boolean draw, int id){
         mCont = cont;
         looker = new GpsTracker(cont);
         original = (Activity) cont;
-        lats = latlngs;
-        titles = strings;
+        if(draw) {
+            lats = PingHandler.getInstance().getLocations();
+            titles = PingHandler.getInstance().getTitles();
+        }
+        else {
+            lats = new LatLng[0];
+            titles = new String[0];
+        }
+        MapFragment frag =  (MapFragment) original.getFragmentManager().findFragmentById(id);
+        frag.getMapAsync(this);
+
+    }
+
+    public MapMaker(Context cont, LatLng coordinate, String title, int id){           //constructor for ping info activity
+        mCont = cont;
+        looker = new GpsTracker(cont);
+        original = (Activity) cont;
+        lats = new LatLng[0];
+        titles = new String[0];
+        infoTitle = title;
+        coordinates = coordinate;
+        clickable = false;
         MapFragment frag =  (MapFragment) original.getFragmentManager().findFragmentById(id);
         frag.getMapAsync(this);
 
@@ -72,26 +96,40 @@ public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.
                 }
             });
         }
-
-        LatLng coordinates = new LatLng(looker.getLatitude(), looker.getLongitude());
+        looker.getLocation();
+        if (coordinates == null) {
+            coordinates = new LatLng(looker.getLatitude(), looker.getLongitude());
+        }
+        else{
+            setMarkThere(infoTitle, 0, coordinates);
+        }
         LatLng university = new LatLng(65.0593186, 25.4662925);
-        goTo(university,15);         //sets the map to oulu university.
+        goTo(coordinates,15);         //sets the map current position
+
+
         Log.d("Latitude", String.valueOf(looker.getLatitude()));
         Log.d("Longitude", String.valueOf(looker.getLongitude()));
 
         for (int i = 0; i < titles.length; i++ ){
-            setMarkThere(titles[i], lats[i]);
+            setMarkThere(titles[i], i, lats[i]);
         }
 
-        myMap.setOnInfoWindowClickListener(this);
+        if(clickable) {         //if map is on ping info activity, info click shouldn't work
+            myMap.setOnInfoWindowClickListener(this);
+        }
         Log.d("MapStatus", "ready");
     }
 
 
-    public void onInfoWindowClick(Marker marker) {
+    public void onInfoWindowClick(Marker marker) {      //when clicking on marker info box
         final String selected = (String) marker.getTag();
         Intent i = new Intent(mCont, PingInfo.class);
         i.putExtra("name", selected);
+        String snippet = marker.getSnippet();
+        i.putExtra("id", snippet);
+        int id = Integer.parseInt(snippet);
+        snippet = PingHandler.getInstance().getInfos()[id];
+        i.putExtra("info", snippet);
         mCont.startActivity (i);
     }
 
@@ -101,14 +139,18 @@ public class MapMaker extends Activity implements OnMapReadyCallback, GoogleMap.
         myMap.moveCamera(upper);
     }
 
-    public void setMark(String title){
+    public void setMark(String title){      //set marker on the camerea position
         Marker marker = myMap.addMarker(new MarkerOptions().position(myMap.getCameraPosition().target).title(title));
         marker.setTag(title);
     }
 
-    public void setMarkThere(String title, LatLng ll){
-        Marker marker =  myMap.addMarker(new MarkerOptions().position(ll).title(title));
+    public void setMarkThere(String title, int id,LatLng ll){      //set marker on specific coordinates
+        Marker marker =  myMap.addMarker(new MarkerOptions().position(ll).title(title).snippet(String.valueOf(id)));
         marker.setTag(title);
+    }
+
+    public LatLng getPosition(){
+        return myMap.getCameraPosition().target;
     }
 
 

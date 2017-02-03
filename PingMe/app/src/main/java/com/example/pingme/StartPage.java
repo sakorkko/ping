@@ -16,43 +16,41 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import com.google.android.gms.maps.model.LatLng;
 
-
-
-import com.example.pingme.GpsTracker;
 import com.example.pingme.MapMaker;
+import com.example.pingme.Pings;
+import com.example.pingme.PingHandler;
 
 
 public class StartPage extends AppCompatActivity{
 
     private MapMaker mapMine;
-    String[] titles = {"Hello world","Life is a set of cross-roads","Dormammu, I've come to bargain"};
-    LatLng[] ll = {new LatLng(65.062766, 25.472340),new LatLng(65.055751, 25.472329),new LatLng(65.059235, 25.469904)};
+    PingHandler pingHandler = PingHandler.getInstance();
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int id = R.id.pingMap;
         if (googleServicesWork()){
             setContentView(R.layout.activity_start_page);
-            Toast.makeText(this, "YAY", Toast.LENGTH_LONG).show();
-            if(!hasPermissions()){
+            if(!hasPermissions()){              //checks gps permissions
                 cansIHasPermissons();
             }
-            int id = R.id.pingMap;
-            mapMine = new MapMaker(StartPage.this, id, titles, ll);
+
+            mapMine = new MapMaker(StartPage.this, true, id);     //sets up map
         }
         else{
             // no map
         }
-
     }
 
 
     public void openList(View v){
         startActivity(new Intent(StartPage.this, PingList.class));
     }
-    public void openCreate(View v) { startActivity(new Intent(StartPage.this, CreatePing.class)); }
+    public void openCreate(View v) { startActivity(new Intent(StartPage.this, CreatePing.class));
+    }
 
 
 
@@ -76,7 +74,7 @@ public class StartPage extends AppCompatActivity{
 
 
 
-    private boolean hasPermissions(){
+    private boolean hasPermissions(){       //gps permissions
         int result = 0;
         String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
@@ -89,14 +87,14 @@ public class StartPage extends AppCompatActivity{
         return true;
     }
 
-    private void cansIHasPermissons(){
+    private void cansIHasPermissons(){      //asks user for gps permissions
         String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             requestPermissions(permissions, 123);
         }
     }
 
-    @Override
+    @Override       //leads from canIhasPermissions. handels the results of the permission request
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         boolean granted = true;
 
