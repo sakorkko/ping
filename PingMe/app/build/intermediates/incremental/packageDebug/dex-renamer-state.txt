@@ -1,4 +1,4 @@
-#Tue Jan 31 15:30:43 EET 2017
+#Fri Feb 03 14:05:52 EET 2017
 base.0=/home/somnic/projects/pingme_new/ping/PingMe/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_fed6006363325714fa53b6b64e732d5ee7592e21
 renamed.1=classes.dex
 renamed.0=classes2.dex

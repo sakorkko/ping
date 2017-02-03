@@ -1,9 +1,14 @@
 package com.example.pingme;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -19,6 +24,15 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationServices;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 
 public class MainActivity extends AppCompatActivity implements
         ConnectionCallbacks, OnConnectionFailedListener {
@@ -51,6 +65,12 @@ public class MainActivity extends AppCompatActivity implements
                     .build();
         }
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mMessageReceiver, new IntentFilter("pingReceiver"));
+
+        FirebaseMessaging.getInstance().subscribeToTopic("pings");
+        Toast.makeText(MainActivity.this, "subscribed to pings", Toast.LENGTH_SHORT).show();
+
         // If a notification message is tapped, any data accompanying the notification
         // message is available in the intent extras. In this sample the launcher
         // intent is fired when the notification is tapped, so any accompanying data would
@@ -68,12 +88,15 @@ public class MainActivity extends AppCompatActivity implements
         }
         // [END handle_data_extras]
 
+
         Button sendpingButton = (Button) findViewById(R.id.sendpingButton);
         sendpingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Hardcoded values for testing. These should be replaced with user input data once integrated with UI
+                String[] pingParams = { "test title", "test body", "65.0593,25.4663" };
                 AsyncT asyncT = new AsyncT();
-                asyncT.execute();
+                asyncT.execute(pingParams);
 
                 // Log and toast
                 String msg = "Sent test ping";
@@ -96,6 +119,19 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
     }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            String pingTitle = intent.getStringExtra("title");
+            String pingBody = intent.getStringExtra("body");
+            String pingLocation = intent.getStringExtra("location");
+            Log.d(TAG, "ACTIVITY ping Title: " + pingTitle);
+            Log.d(TAG, "ACTIVITY ping Body: " + pingBody);
+            Log.d(TAG, "ACTIVITY ping Location: " + pingLocation);
+        }
+    };
 
     @Override
     protected void onStart() {

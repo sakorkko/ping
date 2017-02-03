@@ -5,22 +5,22 @@
     density="560dpi"
     format="8"
     plugin-version="2.2.3"
-    timestamp="10433513871833"
+    timestamp="3248510364889"
     token="7603865227414560034"
-    verifier="MANIFEST_FILE_CHANGE" >
+    verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="2421" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="511" />
     <task
         name="verifier"
-        duration="0" />
+        duration="17" />
 
     <artifact
         location="/home/somnic/projects/pingme_new/ping/PingMe/app/build/outputs/apk/app-debug.apk"
