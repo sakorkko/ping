@@ -66,5 +66,9 @@ public class PingHandler{
 
     }
 
+    public Pings getNewest(){
+        return newest;
+    }
+
 
 }

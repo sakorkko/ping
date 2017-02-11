@@ -73,6 +73,7 @@ public class StartPage extends AppCompatActivity{
             LatLng pingPosition = new LatLng(pingLatitude, pingLongitude);
 
             PingHandler.getInstance().addPing(pingTitle, pingBody, pingPosition);
+            mapMine.setMarkThere(pingTitle, PingHandler.getInstance().getNewest().getId(), pingPosition);
         }
     };
 
