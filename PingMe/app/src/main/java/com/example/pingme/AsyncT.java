@@ -2,14 +2,24 @@ package com.example.pingme;
 
 import android.os.AsyncTask;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 class AsyncT extends AsyncTask<String,Void,Void> {
+
+    private String pingId;
+    private DatabaseReference mFirebaseDatabase;
+    private FirebaseDatabase mFirebaseInstance;
+
+    // For getting the senders token and passing it with the ping. Needed for database and targeting replies to the ping's sender
+    private String myToken = FirebaseInstanceId.getInstance().getToken();
 
     @Override
     protected Void doInBackground(String... pingParams) {
@@ -26,9 +36,6 @@ class AsyncT extends AsyncTask<String,Void,Void> {
 
         // For sending messages to pings topic. Required for messaging multiple devices as targeting whole app isn't supported on Android
         String myTopic = "/topics/pings";
-
-        // For getting the senders token and passing it with the ping. Needed for targeting replies to the ping's sender
-        String myToken = FirebaseInstanceId.getInstance().getToken();
 
         try {
             // url for  Firebase Cloud Messaging send requests
@@ -59,6 +66,24 @@ class AsyncT extends AsyncTask<String,Void,Void> {
             e.printStackTrace();
         }
 
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+
+        // get reference to 'users' node
+        mFirebaseDatabase = mFirebaseInstance.getReference("pings");
+
+        createPing(text1, text2, pingLocation, myToken);
+
         return null;
+    }
+
+    private void createPing(String title, String body, String location, String sender) {
+
+        String systemTime = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) + "";
+
+        pingId = myToken + systemTime;
+
+        Ping ping = new Ping(title, body, location, sender);
+
+        mFirebaseDatabase.child(pingId).setValue(ping);
     }
 }

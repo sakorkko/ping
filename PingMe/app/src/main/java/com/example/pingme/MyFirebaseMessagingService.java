@@ -43,9 +43,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         pingReceiverMessageToActivity(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), remoteMessage.getData().get("location").toString());
+
+
         //Calling method to generate notification
 
-        sendNotification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
+        //sendNotification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
     }
 
     //Method for generating push notification
