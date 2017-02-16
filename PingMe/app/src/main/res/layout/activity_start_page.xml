@@ -47,6 +47,7 @@
                     android:id="@+id/imageView6"
                     android:layout_weight="0.5"
                     android:adjustViewBounds="true" />
+
             </LinearLayout>
 
         </RelativeLayout>
@@ -80,8 +81,22 @@
                 android:id="@+id/button3"
                 android:onClick="openList"
                 android:layout_weight="1" />
+
+
         </LinearLayout>
 
     </LinearLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:srcCompat="@drawable/location"
+        android:id="@+id/imageButton"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:onClick="center"
+        android:padding="20dp"
+         />
 
 </RelativeLayout>

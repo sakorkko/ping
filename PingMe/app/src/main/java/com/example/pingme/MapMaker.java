@@ -92,7 +92,7 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         else{
             setMarkThere(infoTitle, 0, coordinates);
         }
-        LatLng university = new LatLng(65.0593186, 25.4662925);
+        LatLng university = new LatLng(65.0593186, 25.4662925);     // university coordinates
         goTo(coordinates,15);         //sets the map current position
 
 
@@ -140,6 +140,10 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
 
     public LatLng getPosition(){
         return myMap.getCameraPosition().target;
+    }
+
+    public LatLng getGps(){
+        return new LatLng(looker.getLatitude(), looker.getLongitude());
     }
 
 

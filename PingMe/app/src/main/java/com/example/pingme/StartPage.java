@@ -145,4 +145,8 @@ public class StartPage extends AppCompatActivity{
             Toast.makeText(this, "I can't find you if you don't let me", Toast.LENGTH_LONG).show();
         }
     }
+
+    public void center(View v){
+        mapMine.goTo(mapMine.getGps(), 15);
+    }
 }
