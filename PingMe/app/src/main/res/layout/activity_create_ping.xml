@@ -34,7 +34,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:backgroundTint="@color/colorPrimary" />
-        
+
         <Button
             android:text="List"
             android:layout_width="0dp"

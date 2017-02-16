@@ -1,24 +1,13 @@
 package com.example.pingme;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.Manifest;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
+
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -103,7 +92,7 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         else{
             setMarkThere(infoTitle, 0, coordinates);
         }
-        LatLng university = new LatLng(65.0593186, 25.4662925);
+        LatLng university = new LatLng(65.0593186, 25.4662925);     // university coordinates
         goTo(coordinates,15);         //sets the map current position
 
 
@@ -151,6 +140,10 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
 
     public LatLng getPosition(){
         return myMap.getCameraPosition().target;
+    }
+
+    public LatLng getGps(){
+        return new LatLng(looker.getLatitude(), looker.getLongitude());
     }
 
 

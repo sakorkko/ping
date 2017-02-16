@@ -73,6 +73,7 @@ public class StartPage extends AppCompatActivity{
             LatLng pingPosition = new LatLng(pingLatitude, pingLongitude);
 
             PingHandler.getInstance().addPing(pingTitle, pingBody, pingPosition);
+            mapMine.setMarkThere(pingTitle, PingHandler.getInstance().getNewest().getId(), pingPosition);
         }
     };
 
@@ -143,5 +144,9 @@ public class StartPage extends AppCompatActivity{
         else{
             Toast.makeText(this, "I can't find you if you don't let me", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void center(View v){
+        mapMine.goTo(mapMine.getGps(), 15);
     }
 }
