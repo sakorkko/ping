@@ -8,16 +8,18 @@ public class Ping {
         public String body;
         public String location;
         public String sender;
+        public String timestamp;
 
         // Default constructor required for calls to
         // DataSnapshot.getValue(User.class)
         public Ping() {
         }
 
-        public Ping(String title, String body, String location, String sender) {
+        public Ping(String title, String body, String location, String sender, String timestamp) {
             this.title = title;
             this.body = body;
             this.location = location;
             this.sender = sender;
+            this.timestamp = timestamp;
         }
     }

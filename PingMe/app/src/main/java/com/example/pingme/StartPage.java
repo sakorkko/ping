@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
@@ -26,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -37,6 +39,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.example.pingme.MapMaker;
 import com.example.pingme.Pings;
 import com.example.pingme.PingHandler;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class StartPage extends AppCompatActivity{
@@ -56,6 +60,7 @@ public class StartPage extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int id = R.id.pingMap;
+
 
         /*
         LocalBroadcastManager.getInstance(this).registerReceiver(
@@ -98,7 +103,26 @@ public class StartPage extends AppCompatActivity{
         // keep offline data in sync with online database
         pingsRef.keepSynced(true);
 
+        // calculate server time offset
+        DatabaseReference offsetRef = FirebaseDatabase.getInstance().getReference(".info/serverTimeOffset");
+        offsetRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                long offset = snapshot.getValue(Long.class);
+                long estimatedServerTimeMs = System.currentTimeMillis() + offset;
+                String estTime = Long.toString(TimeUnit.MILLISECONDS.toSeconds(estimatedServerTimeMs));
+                String offsetString = Long.toString(offset);
+                String systemTime = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) + "";
+                Log.d(TAG, "system time: " + systemTime);
+                Log.d(TAG, "offset from database time: " + offsetString);
+                Log.d(TAG, "estimated real time: " + estTime);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.err.println("Listener was cancelled");
+            }
+        });
 
         // database operations for retrieving pings
         listener = pingsRef.orderByValue().addChildEventListener(new ChildEventListener() {
