@@ -52,11 +52,14 @@ public class CreatePing extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
+
                 if (user != null) {
                     // User is signed in
                     authUser = user.getUid();
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
+                }
+
+                else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
@@ -88,19 +91,20 @@ public class CreatePing extends AppCompatActivity {
     };
     */
 
-    public void openStart(View v){
+    public void openStart(View v) {
         finish();
     }
-    public void openList(View v){startActivity(new Intent(CreatePing.this, PingList.class));
+    public void openList(View v) {
+        startActivity(new Intent(CreatePing.this, PingList.class));
         finish();
     }
 
 
-    public void mark(View v){           //starts a pop_up
+    public void mark(View v) {
+        //starts a pop_up
         Intent i = new Intent(this, pop_up.class);
         final int result = 1;
         startActivityForResult(i, result);
-
     }
 
     @Override
@@ -118,26 +122,23 @@ public class CreatePing extends AppCompatActivity {
     }
 
     private void signInAnonymously() {
-        // [START signin_anonymously]
         mAuth.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInAnonymously:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
+                        // If sign in fails, display a message to the user. If sign in succeeds the auth state listener will be notified and logic to handle the signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInAnonymously", task.getException());
                         }
                     }
                 });
-        // [END signin_anonymously]
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {     //result from the pop_up
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //result from the pop_up
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
             EditText title = (EditText) findViewById(R.id.editText);
@@ -145,18 +146,12 @@ public class CreatePing extends AppCompatActivity {
             EditText info = (EditText) findViewById(R.id.editText3);
             String additionalInfo = String.valueOf(info.getText());
             LatLng position = mapMine.getPosition();
-
             String positionString = String.valueOf(position.latitude) + "," + String.valueOf(position.longitude);
             String[] pingParams = { head, additionalInfo, positionString, authUser };
             AsyncT asyncT = new AsyncT();
             asyncT.execute(pingParams);
-
-
-
             // PingHandler.getInstance().addPing(head, additionalInfo, position);
-
             finish();
         }
     }
-
 }
