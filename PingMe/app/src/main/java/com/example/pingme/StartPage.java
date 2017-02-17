@@ -149,8 +149,9 @@ public class StartPage extends AppCompatActivity{
                     String longitude = parts[1];
                     LatLng latlong = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
 
-                    pingHandler.addPing(newPost.title, newPost.body, latlong, snapshot.getKey());
-                    mapMine.setMarkThere(newPost.title, pingHandler.getNewest().getId(), latlong);
+                //adds pings to list
+                pingHandler.addPing(newPost.title, newPost.body, latlong, snapshot.getKey());
+                mapMine.setMarkThere(newPost.title, pingHandler.getNewest().getId(), latlong);
 
                     Log.d("PingID", snapshot.getKey());
                     Log.d("TALLLA", newPost.title);
