@@ -21,6 +21,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -52,6 +57,7 @@ public class StartPage extends AppCompatActivity{
                 mMessageReceiver, new IntentFilter("pingReceiver"));
 
         FirebaseMessaging.getInstance().subscribeToTopic("pings");
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -70,6 +76,37 @@ public class StartPage extends AppCompatActivity{
         };
 
         signInAnonymously();
+
+        DatabaseReference pingsRef = FirebaseDatabase.getInstance().getReference("pings");
+        pingsRef.keepSynced(true);
+
+        pingsRef.orderByValue().addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                System.out.println("ping: " + snapshot.getKey() + " has data: " + snapshot.getValue());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         if (googleServicesWork()){
             setContentView(R.layout.activity_start_page);
             if(!hasPermissions()){              //checks gps permissions
