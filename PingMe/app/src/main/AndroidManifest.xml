@@ -39,7 +39,8 @@
             android:resource="@color/colorAccent" />
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <activity android:name=".StartPage">
+        <activity android:name=".StartPage"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,9 +64,12 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".CreatePing" />
-        <activity android:name=".PingList" />
-        <activity android:name=".PingInfo" />
+        <activity android:name=".CreatePing"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PingList"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PingInfo"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".MyFirebaseMessagingService">
