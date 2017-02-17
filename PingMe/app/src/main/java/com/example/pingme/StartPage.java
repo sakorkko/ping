@@ -16,6 +16,11 @@ import android.view.View;
 import android.widget.Toast;
 import android.Manifest;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -35,7 +40,9 @@ public class StartPage extends AppCompatActivity{
     PingHandler pingHandler = PingHandler.getInstance();
     private static final String TAG = "StartPage";
 
+    private FirebaseAuth mAuth;
 
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,24 @@ public class StartPage extends AppCompatActivity{
                 mMessageReceiver, new IntentFilter("pingReceiver"));
 
         FirebaseMessaging.getInstance().subscribeToTopic("pings");
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+
+        signInAnonymously();
         if (googleServicesWork()){
             setContentView(R.layout.activity_start_page);
             if(!hasPermissions()){              //checks gps permissions
@@ -56,6 +81,39 @@ public class StartPage extends AppCompatActivity{
         else{
             // no map
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    private void signInAnonymously() {
+        // [START signin_anonymously]
+        mAuth.signInAnonymously()
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInAnonymously:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInAnonymously", task.getException());
+                        }
+                    }
+                });
+        // [END signin_anonymously]
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {

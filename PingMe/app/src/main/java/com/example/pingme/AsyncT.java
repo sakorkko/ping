@@ -24,7 +24,7 @@ class AsyncT extends AsyncTask<String,Void,Void> {
     @Override
     protected Void doInBackground(String... pingParams) {
 
-        String text1, text2, pingLocation;
+        String text1, text2, pingLocation, authUser;
         // Title for ping
         text1 = pingParams[0];
 
@@ -33,6 +33,8 @@ class AsyncT extends AsyncTask<String,Void,Void> {
 
         // Location for ping
         pingLocation = pingParams[2];
+
+        authUser = pingParams[3];
 
         // For sending messages to pings topic. Required for messaging multiple devices as targeting whole app isn't supported on Android
         String myTopic = "/topics/pings";
@@ -50,7 +52,7 @@ class AsyncT extends AsyncTask<String,Void,Void> {
             httpURLConnection.connect();
 
             // myTopic should be replaced with targeted person's InstanceID Token
-            String jsonData = "{\"to\":\"" + myTopic + "\",\"notification\":{\"title\":\"" + text1 + "\",\"body\":\"" + text2 + "\"},\"data\":{\"location\":\"" + pingLocation + "\",\"token\":\"" + myToken + "\"},\"priority\":10}";
+            String jsonData = "{\"to\":\"" + myTopic + "\",\"notification\":{\"title\":\"" + text1 + "\",\"body\":\"" + text2 + "\"},\"data\":{\"location\":\"" + pingLocation + "\",\"sender\":\"" + authUser + "\"},\"priority\":10}";
 
             DataOutputStream outdata = new DataOutputStream(httpURLConnection.getOutputStream());
             outdata.writeBytes( jsonData );
@@ -71,7 +73,7 @@ class AsyncT extends AsyncTask<String,Void,Void> {
         // get reference to 'users' node
         mFirebaseDatabase = mFirebaseInstance.getReference("pings");
 
-        createPing(text1, text2, pingLocation, myToken);
+        createPing(text1, text2, pingLocation, authUser);
 
         return null;
     }
