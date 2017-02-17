@@ -45,6 +45,9 @@ public class StartPage extends AppCompatActivity{
     PingHandler pingHandler = PingHandler.getInstance();
     private static final String TAG = "StartPage";
 
+    private DatabaseReference pingsRef;
+
+    private ChildEventListener listener;
     private FirebaseAuth mAuth;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -60,7 +63,9 @@ public class StartPage extends AppCompatActivity{
         FirebaseMessaging.getInstance().subscribeToTopic("pings");
 
         // enable database persistence for offline use
+
 //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
 
         // get instance of firebase authentication
         mAuth = FirebaseAuth.getInstance();
@@ -84,16 +89,21 @@ public class StartPage extends AppCompatActivity{
         signInAnonymously();
 
         // set databse reference
-        DatabaseReference pingsRef = FirebaseDatabase.getInstance().getReference("pings");
+        pingsRef = FirebaseDatabase.getInstance().getReference("pings");
 
         // keep offline data in sync with online database
         pingsRef.keepSynced(true);
 
-        // database operations for retrieving existing pings on startup
-        pingsRef.orderByValue().addChildEventListener(new ChildEventListener() {
+
+
+        // database operations for retrieving pings
+        listener = pingsRef.orderByValue().addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
-                System.out.println("ping: " + snapshot.getKey() + " has data: " + snapshot.getValue());
+                System.out.println("ping id: " + snapshot.getKey() + " ping data: " + snapshot.getValue());
+                Ping newPost = snapshot.getValue(Ping.class);
+                Log.d("TALLLA", newPost.title);
+                Toast.makeText(StartPage.this, "tämä ei toimi, ", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -130,6 +140,14 @@ public class StartPage extends AppCompatActivity{
         }
     }
 
+
+    @Override
+    public void onDestroy() {
+        pingsRef.removeEventListener(listener);
+        super.onDestroy();
+    }
+
+
     @Override
     public void onStart() {
         super.onStart();
@@ -165,6 +183,7 @@ public class StartPage extends AppCompatActivity{
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            //This is to receive pings using the Cloudmessaging from firebase
             String action = intent.getAction();
             String pingTitle = intent.getStringExtra("title");
             String pingBody = intent.getStringExtra("body");

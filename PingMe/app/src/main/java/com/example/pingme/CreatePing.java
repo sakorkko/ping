@@ -148,12 +148,11 @@ public class CreatePing extends AppCompatActivity {
             asyncT.execute(pingParams);
 
 
-            Intent intent = new Intent(CreatePing.this, StartPage.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
 
 
+            // PingHandler.getInstance().addPing(head, additionalInfo, position);
 
+            finish();
         }
     }
 
