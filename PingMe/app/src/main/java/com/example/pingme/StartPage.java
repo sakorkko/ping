@@ -115,6 +115,7 @@ public class StartPage extends AppCompatActivity{
                 String longitude = parts[1];
                 LatLng latlong = new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude));
 
+                //adds pings to list
                 pingHandler.addPing(newPost.title, newPost.body, latlong, snapshot.getKey());
                 mapMine.setMarkThere(newPost.title, pingHandler.getNewest().getId(), latlong);
 
@@ -143,7 +144,7 @@ public class StartPage extends AppCompatActivity{
             }
         });
 
-        if (googleServicesWork()){
+        if (googleServicesWork()){  //checks if google works
             setContentView(R.layout.activity_start_page);
             if(!hasPermissions()){              //checks gps permissions
                 cansIHasPermissons();
