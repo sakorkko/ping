@@ -60,7 +60,7 @@ public class StartPage extends AppCompatActivity{
         FirebaseMessaging.getInstance().subscribeToTopic("pings");
 
         // enable database persistence for offline use
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         // get instance of firebase authentication
         mAuth = FirebaseAuth.getInstance();
@@ -89,11 +89,11 @@ public class StartPage extends AppCompatActivity{
         // keep offline data in sync with online database
         pingsRef.keepSynced(true);
 
-        // database operations for retrieving existing pings on startup
+        // database operations for retrieving pings
         pingsRef.orderByValue().addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
-                System.out.println("ping: " + snapshot.getKey() + " has data: " + snapshot.getValue());
+                System.out.println("ping id: " + snapshot.getKey() + " ping data: " + snapshot.getValue());
             }
 
             @Override
