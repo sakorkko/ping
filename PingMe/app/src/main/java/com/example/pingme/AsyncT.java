@@ -82,7 +82,7 @@ class AsyncT extends AsyncTask<String,Void,Void> {
 
         String systemTime = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) + "";
 
-        pingId = myToken + systemTime;
+        pingId = systemTime + myToken ;
 
         Ping ping = new Ping(title, body, location, sender);
 
