@@ -118,6 +118,7 @@ public class StartPage extends AppCompatActivity{
                 pingHandler.addPing(newPost.title, newPost.body, latlong, snapshot.getKey());
                 mapMine.setMarkThere(newPost.title, pingHandler.getNewest().getId(), latlong);
 
+                Log.d("PingID", snapshot.getKey());
                 Log.d("TALLLA", newPost.title);
             }
 

@@ -26,7 +26,7 @@ public class PingList extends ListActivity {
                 Intent i = new Intent(getApplicationContext(), PingInfo.class);
                 i.putExtra("name", selected);
                 i.putExtra("info", PingHandler.getInstance().getInfos()[position]);
-                i.putExtra("id", String.valueOf(position));
+                i.putExtra("id", PingHandler.getInstance().getThisId(position));
                 startActivity (i);
             }
         }
