@@ -60,7 +60,7 @@ public class StartPage extends AppCompatActivity{
         FirebaseMessaging.getInstance().subscribeToTopic("pings");
 
         // enable database persistence for offline use
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         // get instance of firebase authentication
         mAuth = FirebaseAuth.getInstance();
@@ -162,7 +162,6 @@ public class StartPage extends AppCompatActivity{
                 });
         // [END signin_anonymously]
     }
-
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
