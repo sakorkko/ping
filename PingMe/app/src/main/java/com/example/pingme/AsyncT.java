@@ -39,7 +39,7 @@ class AsyncT extends AsyncTask<String,Void,Void> {
         // For sending messages to pings topic. Required for messaging multiple devices as targeting whole app isn't supported on Android
         String myTopic = "/topics/pings";
 
-        try {
+        /*try {
             // url for  Firebase Cloud Messaging send requests
             URL url = new URL("https://fcm.googleapis.com/fcm/send");
             HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
@@ -66,7 +66,7 @@ class AsyncT extends AsyncTask<String,Void,Void> {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         mFirebaseInstance = FirebaseDatabase.getInstance();
 
@@ -82,7 +82,7 @@ class AsyncT extends AsyncTask<String,Void,Void> {
 
         String systemTime = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) + "";
 
-        pingId = myToken + systemTime;
+        pingId = systemTime + myToken ;
 
         Ping ping = new Ping(title, body, location, sender);
 
