@@ -52,7 +52,7 @@ class AsyncT extends AsyncTask<String,Void,Void> {
             httpURLConnection.connect();
 
             // myTopic should be replaced with targeted person's InstanceID Token
-            String jsonData = "{\"to\":\"" + myTopic + "\",\"notification\":{\"title\":\"" + text1 + "\",\"body\":\"" + text2 + "\"},\"data\":{\"location\":\"" + pingLocation + "\",\"sender\":\"" + authUser + "\"},\"priority\":10}";
+            String jsonData = "{\"to\":\"" + myTopic + "\",\"notification\":{\"title\":\"" + text1 + "\",\"body\":\"" + text2 + "\"},\"data\":{\"location\":\"" + pingLocation + "\",\"sender\":\"" + myToken + "\"},\"priority\":10}";
 
             DataOutputStream outdata = new DataOutputStream(httpURLConnection.getOutputStream());
             outdata.writeBytes( jsonData );
@@ -70,7 +70,7 @@ class AsyncT extends AsyncTask<String,Void,Void> {
 
         mFirebaseInstance = FirebaseDatabase.getInstance();
 
-        // get reference to 'users' node
+        // get reference to 'pings' node
         mFirebaseDatabase = mFirebaseInstance.getReference("pings");
 
         createPing(text1, text2, pingLocation, authUser);

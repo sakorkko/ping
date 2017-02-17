@@ -56,11 +56,16 @@ public class StartPage extends AppCompatActivity{
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mMessageReceiver, new IntentFilter("pingReceiver"));
 
+        // subscribe to pings topic
         FirebaseMessaging.getInstance().subscribeToTopic("pings");
+
+        // enable database persistence for offline use
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
+        // get instance of firebase authentication
         mAuth = FirebaseAuth.getInstance();
 
+        // firebase authentication listener
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -75,11 +80,16 @@ public class StartPage extends AppCompatActivity{
             }
         };
 
+        // sign in using anonymous authentication
         signInAnonymously();
 
+        // set databse reference
         DatabaseReference pingsRef = FirebaseDatabase.getInstance().getReference("pings");
+
+        // keep offline data in sync with online database
         pingsRef.keepSynced(true);
 
+        // database operations for retrieving existing pings on startup
         pingsRef.orderByValue().addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
