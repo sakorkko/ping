@@ -41,8 +41,10 @@ public class CreatePing extends AppCompatActivity {
         setContentView(R.layout.activity_create_ping);
         int id = R.id.creatorMap;
 
+        /*
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mMessageReceiver, new IntentFilter("pingReceiver"));
+        */
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -66,6 +68,7 @@ public class CreatePing extends AppCompatActivity {
         mapMine = new MapMaker(CreatePing.this, false, id);     //creates empty map
     }
 
+    /*
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -83,6 +86,7 @@ public class CreatePing extends AppCompatActivity {
             PingHandler.getInstance().addPing(pingTitle, pingBody, pingPosition);
         }
     };
+    */
 
     public void openStart(View v){
         finish();
