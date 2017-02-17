@@ -56,6 +56,8 @@ public class StartPage extends AppCompatActivity{
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    private String estTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +112,7 @@ public class StartPage extends AppCompatActivity{
             public void onDataChange(DataSnapshot snapshot) {
                 long offset = snapshot.getValue(Long.class);
                 long estimatedServerTimeMs = System.currentTimeMillis() + offset;
-                String estTime = Long.toString(TimeUnit.MILLISECONDS.toSeconds(estimatedServerTimeMs));
+                estTime = Long.toString(TimeUnit.MILLISECONDS.toSeconds(estimatedServerTimeMs));
                 String offsetString = Long.toString(offset);
                 String systemTime = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) + "";
                 Log.d(TAG, "system time: " + systemTime);
@@ -132,18 +134,27 @@ public class StartPage extends AppCompatActivity{
                 //Extract data from snapshot to ping
                 Ping newPost = snapshot.getValue(Ping.class);
 
-                //Location formatting
-                String location = newPost.location;
-                String[] parts = location.split(",");
-                String latitude = parts[0];
-                String longitude = parts[1];
-                LatLng latlong = new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude));
+                Log.d(TAG, "timestamp: " + newPost.timestamp);
+                Log.d(TAG, "estimated real time: " + estTime);
+                // remove ping if older than 3 weeks
+                if (Long.parseLong(estTime) - Long.parseLong(newPost.timestamp) > 1814400){
+                    snapshot.getRef().setValue(null);
+                    Log.d(TAG, "ping older than 3 weeks");
+                }
+                else {
+                    //Location formatting
+                    String location = newPost.location;
+                    String[] parts = location.split(",");
+                    String latitude = parts[0];
+                    String longitude = parts[1];
+                    LatLng latlong = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
 
-                pingHandler.addPing(newPost.title, newPost.body, latlong, snapshot.getKey());
-                mapMine.setMarkThere(newPost.title, pingHandler.getNewest().getId(), latlong);
+                    pingHandler.addPing(newPost.title, newPost.body, latlong, snapshot.getKey());
+                    mapMine.setMarkThere(newPost.title, pingHandler.getNewest().getId(), latlong);
 
-                Log.d("PingID", snapshot.getKey());
-                Log.d("TALLLA", newPost.title);
+                    Log.d("PingID", snapshot.getKey());
+                    Log.d("TALLLA", newPost.title);
+                }
             }
 
             @Override
