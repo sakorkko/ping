@@ -56,8 +56,12 @@ public class StartPage extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int id = R.id.pingMap;
+
+        /*
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mMessageReceiver, new IntentFilter("pingReceiver"));
+        */
+
 
         // subscribe to pings topic
         FirebaseMessaging.getInstance().subscribeToTopic("pings");
@@ -98,10 +102,21 @@ public class StartPage extends AppCompatActivity{
         listener = pingsRef.orderByValue().addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
-                System.out.println("ping id: " + snapshot.getKey() + " ping data: " + snapshot.getValue());
+
+                //Extract data from snapshot to ping
                 Ping newPost = snapshot.getValue(Ping.class);
+
+                //Location formatting
+                String location = newPost.location;
+                String[] parts = location.split(",");
+                String latitude = parts[0];
+                String longitude = parts[1];
+                LatLng latlong = new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude));
+
+                pingHandler.addPing(newPost.title, newPost.body, latlong, snapshot.getKey());
+                mapMine.setMarkThere(newPost.title, pingHandler.getNewest().getId(), latlong);
+
                 Log.d("TALLLA", newPost.title);
-                Toast.makeText(StartPage.this, "tämä ei toimi, ", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -179,6 +194,7 @@ public class StartPage extends AppCompatActivity{
         // [END signin_anonymously]
     }
 
+    /*
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -198,7 +214,7 @@ public class StartPage extends AppCompatActivity{
             mapMine.setMarkThere(pingTitle, PingHandler.getInstance().getNewest().getId(), pingPosition);
         }
     };
-
+    */
 
     public void openList(View v){
         startActivity(new Intent(StartPage.this, PingList.class));

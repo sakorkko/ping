@@ -90,7 +90,7 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
             coordinates = new LatLng(looker.getLatitude(), looker.getLongitude());
         }
         else{
-            setMarkThere(infoTitle, 0, coordinates);
+            setMarkThere(infoTitle, "0", coordinates);
         }
         LatLng university = new LatLng(65.0593186, 25.4662925);     // university coordinates
         goTo(coordinates,15);         //sets the map current position
@@ -100,7 +100,7 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         Log.d("Longitude", String.valueOf(looker.getLongitude()));
 
         for (int i = 0; i < titles.length; i++ ){
-            setMarkThere(titles[i], i, lats[i]);
+            setMarkThere(titles[i], String.valueOf(i), lats[i]);
         }
 
         if(clickable) {         //if map is on ping info activity, info click shouldn't work
@@ -116,8 +116,7 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         i.putExtra("name", selected);
         String snippet = marker.getSnippet();
         i.putExtra("id", snippet);
-        int id = Integer.parseInt(snippet);
-        snippet = PingHandler.getInstance().getInfos()[id];
+        snippet = PingHandler.getInstance().getInfo(snippet);
         i.putExtra("info", snippet);
         mCont.startActivity (i);
     }
@@ -133,8 +132,8 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         marker.setTag(title);
     }
 
-    public void setMarkThere(String title, int id,LatLng ll){      //set marker on specific coordinates
-        Marker marker =  myMap.addMarker(new MarkerOptions().position(ll).title(title).snippet(String.valueOf(id)));
+    public void setMarkThere(String title, String id,LatLng ll){      //set marker on specific coordinates
+        Marker marker =  myMap.addMarker(new MarkerOptions().position(ll).title(title).snippet(id));
         marker.setTag(title);
     }
 

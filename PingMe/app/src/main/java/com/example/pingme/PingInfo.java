@@ -27,8 +27,8 @@ public class PingInfo extends AppCompatActivity {
 
         int id = R.id.infomap;
         String pingId = in.getStringExtra("id");
-        LatLng ll = PingHandler.getInstance().getLocations()[Integer.parseInt(pingId)];
-        String title = PingHandler.getInstance().getTitles()[Integer.parseInt(pingId)];
+        LatLng ll = PingHandler.getInstance().getLocation(pingId);
+        String title = PingHandler.getInstance().getHeader(pingId);
         mapMine = new MapMaker(PingInfo.this, ll, title, id);     //creates empty map
     }
 }

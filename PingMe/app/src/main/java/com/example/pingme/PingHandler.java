@@ -53,8 +53,8 @@ public class PingHandler{
         return locations;
     }
 
-    public void addPing(String title, String info, LatLng position){
-        newest = new Pings(title, info, position, list);
+    public void addPing(String title, String info, LatLng position, String id){
+        newest = new Pings(title, info, position, list, id);
         int size;
         size = list.length;
         Pings[] spare = new Pings[size+1];        //new list that has room for the new ping;
@@ -64,6 +64,33 @@ public class PingHandler{
         spare[size] = newest;
         list = spare;
 
+    }
+
+    public String getInfo(String id){
+        for(int i = 0; i<list.length; i++){
+            if(list[i].getId() == id) {
+                return list[i].getInfo();
+            }
+        }
+        return null;
+    }
+
+    public LatLng getLocation(String id){
+        for(int i = 0; i<list.length; i++){
+            if(list[i].getId() == id) {
+                return list[i].getPosition();
+            }
+        }
+        return null;
+    }
+
+    public String getHeader(String id){
+        for(int i = 0; i<list.length; i++){
+            if(list[i].getId() == id) {
+                return list[i].getTitle();
+            }
+        }
+        return null;
     }
 
     public Pings getNewest(){
