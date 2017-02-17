@@ -45,12 +45,16 @@ public class PingHandler{
         }
         return infos;
     }
+
     public LatLng[] getLocations(){
         LatLng[] locations = new LatLng[list.length];
         for (int i = 0; i<list.length; i++){
             locations[i] = list[i].getPosition();
         }
         return locations;
+    }
+    public String getThisId(int i){
+        return list[i].getId();
     }
 
     public void addPing(String title, String info, LatLng position, String id){
@@ -68,7 +72,7 @@ public class PingHandler{
 
     public String getInfo(String id){
         for(int i = 0; i<list.length; i++){
-            if(list[i].getId() == id) {
+            if(list[i].getId().equals(id)) {
                 return list[i].getInfo();
             }
         }
@@ -77,7 +81,7 @@ public class PingHandler{
 
     public LatLng getLocation(String id){
         for(int i = 0; i<list.length; i++){
-            if(list[i].getId() == id) {
+            if(list[i].getId().equals(id)) {
                 return list[i].getPosition();
             }
         }
@@ -86,7 +90,7 @@ public class PingHandler{
 
     public String getHeader(String id){
         for(int i = 0; i<list.length; i++){
-            if(list[i].getId() == id) {
+            if(list[i].getId().equals(id)) {
                 return list[i].getTitle();
             }
         }
@@ -97,5 +101,8 @@ public class PingHandler{
         return newest;
     }
 
+    public String getOneId(int i){
+        return list[i].getId();
+    }
 
 }

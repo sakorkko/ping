@@ -3,6 +3,7 @@ package com.example.pingme;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -19,6 +20,7 @@ public class PingInfo extends AppCompatActivity {
 
         String text = in.getStringExtra(("name"));      //text for info boxes
         String info = in.getStringExtra(("info"));
+//        Log.d("Pinginfo", info);
 
         TextView box1 = (TextView)findViewById(R.id.textView);      //write to info boxes
         TextView box2 = (TextView) findViewById(R.id.textView3);
@@ -29,6 +31,6 @@ public class PingInfo extends AppCompatActivity {
         String pingId = in.getStringExtra("id");
         LatLng ll = PingHandler.getInstance().getLocation(pingId);
         String title = PingHandler.getInstance().getHeader(pingId);
-        mapMine = new MapMaker(PingInfo.this, ll, title, id);     //creates empty map
+        mapMine = new MapMaker(PingInfo.this, ll, title, id, pingId);     //creates empty map
     }
 }

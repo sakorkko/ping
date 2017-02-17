@@ -30,6 +30,7 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
     private LatLng coordinates;
     private boolean clickable = true;
     private String infoTitle;
+    private String myId;
 
     public MapMaker(Context cont, boolean draw, int id){
         mCont = cont;
@@ -48,8 +49,9 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
 
     }
 
-    public MapMaker(Context cont, LatLng coordinate, String title, int id){           //constructor for ping info activity
+    public MapMaker(Context cont, LatLng coordinate, String title, int id, String pingId){           //constructor for ping info activity
         mCont = cont;
+        myId = pingId;
         looker = new GpsTracker(cont);
         original = (Activity) cont;
         lats = new LatLng[0];
@@ -90,7 +92,7 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
             coordinates = new LatLng(looker.getLatitude(), looker.getLongitude());
         }
         else{
-            setMarkThere(infoTitle, "0", coordinates);
+            setMarkThere(infoTitle, myId, coordinates);
         }
         LatLng university = new LatLng(65.0593186, 25.4662925);     // university coordinates
         goTo(coordinates,15);         //sets the map current position

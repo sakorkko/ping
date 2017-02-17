@@ -153,6 +153,7 @@ public class CreatePing extends AppCompatActivity {
 
 
 
+
             // PingHandler.getInstance().addPing(head, additionalInfo, position);
 
             finish();

@@ -67,7 +67,9 @@ public class StartPage extends AppCompatActivity{
         FirebaseMessaging.getInstance().subscribeToTopic("pings");
 
         // enable database persistence for offline use
-        // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
 
         // get instance of firebase authentication
         mAuth = FirebaseAuth.getInstance();
@@ -116,6 +118,7 @@ public class StartPage extends AppCompatActivity{
                 pingHandler.addPing(newPost.title, newPost.body, latlong, snapshot.getKey());
                 mapMine.setMarkThere(newPost.title, pingHandler.getNewest().getId(), latlong);
 
+                Log.d("PingID", snapshot.getKey());
                 Log.d("TALLLA", newPost.title);
             }
 
@@ -195,6 +198,7 @@ public class StartPage extends AppCompatActivity{
     }
 
     /*
+
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
