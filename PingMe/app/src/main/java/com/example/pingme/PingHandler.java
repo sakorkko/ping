@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.icu.util.TimeUnit;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -60,7 +61,7 @@ public class PingHandler{
     }
 
     public Long[] getTimestamps(){
-        Long[] timestamps = new Long[][list.length];
+        Long[] timestamps = new Long[] list.length];
         for (int i = 0; i<list.length; i++){
             timestamps[i] = list[i].getTimestamp();
         }
@@ -133,18 +134,17 @@ public class PingHandler{
     public String getOneId(int i){
         return list[i].getId();
     }
-
-/*    public int tooMany(String usersender){
+/*
+    public int tooMany(String usersender){
         //Checks how many pings user has send within 15 minutes
         private int count = 0;
-
-        //Define estTime TODO here
-
+        private Long usertime TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
         for(int i = 0; i<list.length; i++){
-            if ( (list[i].getSender().equals(usersender)) && ((Long.parseLong(estTime) - list[i].getTimestamp()) < 900) ){
+            if ( (list[i].getSender().equals(usersender)) && ((Long.parseLong(usertime) - list[i].getTimestamp()) < 900) ){
                 return list[i].getTimestamp();
             }
         }
         return count;
-    }*/
+    }
+*/
 }
