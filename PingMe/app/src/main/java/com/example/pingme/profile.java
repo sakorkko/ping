@@ -8,27 +8,23 @@ import android.widget.TextView;
 
 public class profile extends AppCompatActivity {
 
-    private MyProfile mProfile;
+    private User mProfile
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         mProfile = getProfile();
-        if (mProfile == null){
-            createProfile();
-            mProfile = getProfile();
-        }
-            TextView header = (TextView) findViewById(R.id.profileName);
-            header.setText(mProfile.getName());
+        TextView header = (TextView) findViewById(R.id.profileName);
+        header.setText(mProfile.name);
     }
 
     public void createProfile(){
 
     }
 
-    public MyProfile getProfile(){
-
+    public User getProfile(){
+        // This function should fetch the user profile.
     }
 
     public void openCreate(View v) { startActivity(new Intent(profile.this, CreatePing.class));
