@@ -19,9 +19,6 @@ public class profile extends AppCompatActivity {
         header.setText(mProfile.name);
     }
 
-    public void createProfile(){
-
-    }
 
     public User getProfile(){
         // This function should fetch the user profile.
@@ -36,5 +33,13 @@ public class profile extends AppCompatActivity {
     }
     public void openMap(View v) {
         finish();
+    }
+
+    public void openMyPings(View v){
+        //opens ping list and sends it a list of my pings
+    }
+
+    public void openFriends(View v){
+        //opens an activity that shows your friens and lets you add new ones
     }
 }
