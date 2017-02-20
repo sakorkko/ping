@@ -136,10 +136,10 @@ public class StartPage extends AppCompatActivity{
 
                 Log.d(TAG, "timestamp: " + newPost.timestamp);
                 Log.d(TAG, "estimated real time: " + estTime);
-                // remove ping if older than 3 weeks
-                if (Long.parseLong(estTime) - Long.parseLong(newPost.timestamp) > 1814400){
-                    snapshot.getRef().setValue(null);
-                    Log.d(TAG, "ping older than 3 weeks");
+                // don't show ping if older than week
+                if (Long.parseLong(estTime) - Long.parseLong(newPost.timestamp) > 604800){
+                    // snapshot.getRef().setValue(null); // use if want to delete instead of just hide
+                    Log.d(TAG, "ping " + snapshot.getKey() +" is older than week");
                 }
                 else {
                     //Location formatting

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import static java.security.AccessController.getContext;
+
 public class CreatePing extends AppCompatActivity {
 
     private MapMaker mapMine;
@@ -34,6 +37,9 @@ public class CreatePing extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private String authUser;
+
+    private String androidId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+            Settings.Secure.ANDROID_ID);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +153,7 @@ public class CreatePing extends AppCompatActivity {
             String additionalInfo = String.valueOf(info.getText());
             LatLng position = mapMine.getPosition();
             String positionString = String.valueOf(position.latitude) + "," + String.valueOf(position.longitude);
-            String[] pingParams = { head, additionalInfo, positionString, authUser };
+            String[] pingParams = { head, additionalInfo, positionString, authUser, androidId };
             AsyncT asyncT = new AsyncT();
             asyncT.execute(pingParams);
             // PingHandler.getInstance().addPing(head, additionalInfo, position);

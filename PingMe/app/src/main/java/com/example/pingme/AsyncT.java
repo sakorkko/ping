@@ -16,6 +16,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import static java.security.AccessController.getContext;
+
 class AsyncT extends AsyncTask<String,Void,Void> {
 
     private String pingId;
@@ -28,7 +30,7 @@ class AsyncT extends AsyncTask<String,Void,Void> {
     @Override
     protected Void doInBackground(String... pingParams) {
 
-        String text1, text2, pingLocation, authUser;
+        String text1, text2, pingLocation, authUser, androidId;
         // Title for ping
         text1 = pingParams[0];
 
@@ -39,6 +41,8 @@ class AsyncT extends AsyncTask<String,Void,Void> {
         pingLocation = pingParams[2];
 
         authUser = pingParams[3];
+
+        androidId = pingParams[4];
 
         // For sending messages to pings topic. Required for messaging multiple devices as targeting whole app isn't supported on Android
         String myTopic = "/topics/pings";
@@ -77,7 +81,7 @@ class AsyncT extends AsyncTask<String,Void,Void> {
         // get reference to 'pings' node
         mFirebaseDatabase = mFirebaseInstance.getReference("pings");
 
-        createPing(text1, text2, pingLocation, authUser);
+        createPing(text1, text2, pingLocation, androidId);
 
         return null;
     }
