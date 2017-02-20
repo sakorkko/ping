@@ -98,6 +98,10 @@ public class CreatePing extends AppCompatActivity {
         startActivity(new Intent(CreatePing.this, PingList.class));
         finish();
     }
+    public void openProfile(View v){
+        startActivity(new Intent(CreatePing.this, profile.class));
+        finish();
+    }
 
 
     public void mark(View v) {

@@ -147,6 +147,10 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         return new LatLng(looker.getLatitude(), looker.getLongitude());
     }
 
+    public void updatePosition(){
+        looker.updateLoc();
+    }
+
 
 
 }

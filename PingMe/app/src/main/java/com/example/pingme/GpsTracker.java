@@ -22,8 +22,8 @@ public class GpsTracker extends Activity implements LocationListener {
     Location Loc;
     double latitude = 0;
     double longitude = 0;
-    private static final long MIN_TIME = 0;
-    private static final long MIN_DISTANCE = 0;
+    private static final long MIN_TIME = 500;
+    private static final long MIN_DISTANCE = 1;
 
     protected LocationManager whereAmI;
 
@@ -119,6 +119,7 @@ public class GpsTracker extends Activity implements LocationListener {
     public void onLocationChanged(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
+        Loc = location;
     }
 
 
@@ -138,5 +139,10 @@ public class GpsTracker extends Activity implements LocationListener {
     public void onStatusChanged(String provider, int status, Bundle extras) {
     }
 
+    public void updateLoc(){
+        Loc = whereAmI.getLastKnownLocation(whereAmI.NETWORK_PROVIDER);
+        latitude = Loc.getLatitude();
+        longitude = Loc.getLongitude();
+    }
 
 }

@@ -314,6 +314,13 @@ public class StartPage extends AppCompatActivity{
     }
 
     public void center(View v){
+
+        mapMine.updatePosition();
         mapMine.goTo(mapMine.getGps(), 15);
+
+
+    }
+    public void openProfile(View v){
+        startActivity(new Intent(StartPage.this, profile.class));
     }
 }
