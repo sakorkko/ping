@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,9 @@ public class CreatePing extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private String authUser;
+
+    private String androidId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+            Settings.Secure.ANDROID_ID);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,15 +106,15 @@ public class CreatePing extends AppCompatActivity {
 
     public void mark(View v) {
         //starts a pop_up, and prohibits too many pings too quickly or if ping has wrong info
-        if(PingHandler.getInstance().tooMany() > 2){
+        /*if(PingHandler.getInstance().tooMany(androidId) > 2){
             Toast.makeText(this, "Too many pings in rapid succession, wait a while...", Toast.LENGTH_LONG).show();
         }
 
-        else{
+        else{*/
             Intent i = new Intent(this, pop_up.class);
             final int result = 1;
             startActivityForResult(i, result);
-        }
+        //}
     }
 
     @Override

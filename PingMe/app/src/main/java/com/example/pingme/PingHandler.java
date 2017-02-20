@@ -134,5 +134,17 @@ public class PingHandler{
         return list[i].getId();
     }
 
-    public tooMany()
+/*    public int tooMany(String usersender){
+        //Checks how many pings user has send within 15 minutes
+        private int count = 0;
+
+        //Define estTime TODO here
+
+        for(int i = 0; i<list.length; i++){
+            if ( (list[i].getSender().equals(usersender)) && ((Long.parseLong(estTime) - list[i].getTimestamp()) < 900) ){
+                return list[i].getTimestamp();
+            }
+        }
+        return count;
+    }*/
 }
