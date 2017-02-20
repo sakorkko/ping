@@ -136,6 +136,7 @@ public class StartPage extends AppCompatActivity{
 
                 Log.d(TAG, "timestamp: " + newPost.timestamp);
                 Log.d(TAG, "estimated real time: " + estTime);
+
                 // remove ping if older than 3 weeks
                 if (Long.parseLong(estTime) - Long.parseLong(newPost.timestamp) > 1814400){
                     snapshot.getRef().setValue(null);
@@ -150,11 +151,11 @@ public class StartPage extends AppCompatActivity{
                     LatLng latlong = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
 
                 //adds pings to list
-                pingHandler.addPing(newPost.title, newPost.body, latlong, snapshot.getKey());
+                pingHandler.addPing(newPost.title, newPost.body, latlong, snapshot.getKey(), newPost.sender);
                 mapMine.setMarkThere(newPost.title, pingHandler.getNewest().getId(), latlong);
 
                     Log.d("PingID", snapshot.getKey());
-                    Log.d("TALLLA", newPost.title);
+                    Log.d("Ping title", newPost.title);
                 }
             }
 

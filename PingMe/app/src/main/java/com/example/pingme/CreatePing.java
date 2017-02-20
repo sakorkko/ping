@@ -101,10 +101,16 @@ public class CreatePing extends AppCompatActivity {
 
 
     public void mark(View v) {
-        //starts a pop_up
-        Intent i = new Intent(this, pop_up.class);
-        final int result = 1;
-        startActivityForResult(i, result);
+        //starts a pop_up, and prohibits too many pings too quickly or if ping has wrong info
+        if(PingHandler.getInstance().tooMany() > 2){
+            Toast.makeText(this, "Too many pings in rapid succession, wait a while...", Toast.LENGTH_LONG).show();
+        }
+
+        else{
+            Intent i = new Intent(this, pop_up.class);
+            final int result = 1;
+            startActivityForResult(i, result);
+        }
     }
 
     @Override

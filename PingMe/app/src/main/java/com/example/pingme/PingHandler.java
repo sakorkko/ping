@@ -14,14 +14,12 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class PingHandler{
 
-
     private static PingHandler Instance = null;
     private Pings[] list = {};
     private Pings newest;
 
     private PingHandler(){
     }
-
 
     public static PingHandler getInstance(){
         if (Instance == null){
@@ -53,11 +51,26 @@ public class PingHandler{
         }
         return locations;
     }
+
+    public String[] getSenders(){
+        String[] senders = new String[list.length];
+        for (int i = 0; i<list.length; i++){
+            senders[i] = list[i].getSender();
+        }
+    }
+
+    public Long[] getTimestamps(){
+        Long[] timestamps = new Long[][list.length];
+        for (int i = 0; i<list.length; i++){
+            timestamps[i] = list[i].getTimestamp();
+        }
+    }
+
     public String getThisId(int i){
         return list[i].getId();
     }
 
-    public void addPing(String title, String info, LatLng position, String id){
+    public void addPing(String title, String info, LatLng position, String id, String sender){
         newest = new Pings(title, info, position, list, id);
         int size;
         size = list.length;
@@ -97,6 +110,22 @@ public class PingHandler{
         return null;
     }
 
+    public String getSender(String id){
+        for(int i = 0; i<list.length; i++){
+            if (list[i].getId().equals(id)){
+                return list[i].getSender();
+            }
+        }
+    }
+
+    public Long getTimestamp(String id){
+        for(int i = 0; i<list.length; i++){
+            if (list[i].getId().equals(id)){
+                return list[i].getTimestamp();
+            }
+        }
+    }
+
     public Pings getNewest(){
         return newest;
     }
@@ -105,4 +134,5 @@ public class PingHandler{
         return list[i].getId();
     }
 
+    public tooMany()
 }

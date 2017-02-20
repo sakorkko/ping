@@ -10,13 +10,16 @@ public class Pings {
     private String title;
     private String info;
     private LatLng position;
+    private String sender;
+    private Long timestamp;
 
-    public Pings(String name, String additional, LatLng place, Pings[] list, String ident){
+    public Pings(String name, String additional, LatLng place, Pings[] list, String ident, String senderid, Long timesent){
         id = ident;
         title = name;
         info = additional;
         position = place;
-
+        sender = senderid;
+        timestamp = timesent;
     }
 
     public String getId(){
@@ -35,5 +38,12 @@ public class Pings {
         return position;
     }
 
+    public String getSender(){
+        return sender;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
 
 }
