@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class profile extends AppCompatActivity {
 
-    private User mProfile
+    private User mProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,8 @@ public class profile extends AppCompatActivity {
 
     public User getProfile(){
         // This function should fetch the user profile.
+        return null;
+
     }
 
     public void openCreate(View v) { startActivity(new Intent(profile.this, CreatePing.class));

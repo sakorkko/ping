@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:weightSum="4"
+        android:weightSum="3"
         android:id="@+id/linearLayout">
 
         <Button
@@ -39,14 +39,6 @@
             android:layout_weight="1"
             android:id="@+id/button3"
             android:onClick="openList"/>
-
-        <Button
-            android:text="Profile"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/button5"
-            android:onClick="openProfile"
-            android:layout_weight="1" />
 
     </LinearLayout>
 

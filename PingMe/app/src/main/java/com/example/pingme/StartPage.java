@@ -56,7 +56,7 @@ public class StartPage extends AppCompatActivity{
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    private String estTime;
+    private String estTime = "1000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +112,7 @@ public class StartPage extends AppCompatActivity{
             public void onDataChange(DataSnapshot snapshot) {
                 long offset = snapshot.getValue(Long.class);
                 long estimatedServerTimeMs = System.currentTimeMillis() + offset;
+                Log.d("servertimes", String.valueOf(estimatedServerTimeMs));
                 estTime = Long.toString(TimeUnit.MILLISECONDS.toSeconds(estimatedServerTimeMs));
                 String offsetString = Long.toString(offset);
                 String systemTime = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) + "";
@@ -133,7 +134,7 @@ public class StartPage extends AppCompatActivity{
 
                 //Extract data from snapshot to ping
                 Ping newPost = snapshot.getValue(Ping.class);
-
+                
                 Log.d(TAG, "timestamp: " + newPost.timestamp);
                 Log.d(TAG, "estimated real time: " + estTime);
                 // don't show ping if older than week
@@ -331,7 +332,7 @@ public class StartPage extends AppCompatActivity{
 
 
     }
-    public void openProfile(View v){
+/*    public void openProfile(View v){
         startActivity(new Intent(StartPage.this, profile.class));
-    }
+    }*/
 }

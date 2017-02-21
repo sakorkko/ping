@@ -38,15 +38,15 @@ public class CreatePing extends AppCompatActivity {
 
     private String authUser;
 
-    private String androidId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
-            Settings.Secure.ANDROID_ID);
+    private String androidId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ping);
         int id = R.id.creatorMap;
-
+        androidId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         /*
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mMessageReceiver, new IntentFilter("pingReceiver"));
@@ -103,12 +103,12 @@ public class CreatePing extends AppCompatActivity {
     public void openList(View v) {
         startActivity(new Intent(CreatePing.this, PingList.class));
         finish();
-    }
+    }/*
     public void openProfile(View v){
         startActivity(new Intent(CreatePing.this, profile.class));
         finish();
     }
-
+*/
 
     public void mark(View v) {
         //starts a pop_up

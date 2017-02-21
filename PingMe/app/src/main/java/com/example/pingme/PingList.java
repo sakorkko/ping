@@ -40,8 +40,8 @@ public class PingList extends ListActivity {
         finish();
     }
 
-    public void openProfile(View v){
+/*    public void openProfile(View v){
         startActivity(new Intent(PingList.this, profile.class));
         finish();
-    }
+    }*/
 }

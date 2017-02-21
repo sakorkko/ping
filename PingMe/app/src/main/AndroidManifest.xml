@@ -94,8 +94,9 @@
 
         <activity
             android:name=".pop_up"
-            android:theme="@style/AppTheme.popper"></activity>
-        <activity android:name=".profile"></activity>
+            android:theme="@style/AppTheme.popper" />
+        <activity android:name=".profile" />
+        <activity android:name=".pop_up_signing"></activity>
     </application>
 
 </manifest>
