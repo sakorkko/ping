@@ -38,8 +38,8 @@ public class CreatePing extends AppCompatActivity {
 
     private String authUser;
 
-    private String androidId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
-            Settings.Secure.ANDROID_ID);
+    /*private String androidId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+            Settings.Secure.ANDROID_ID);*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +157,7 @@ public class CreatePing extends AppCompatActivity {
             String additionalInfo = String.valueOf(info.getText());
             LatLng position = mapMine.getPosition();
             String positionString = String.valueOf(position.latitude) + "," + String.valueOf(position.longitude);
-            String[] pingParams = { head, additionalInfo, positionString, authUser, androidId };
+            String[] pingParams = { head, additionalInfo, positionString, authUser };
             AsyncT asyncT = new AsyncT();
             asyncT.execute(pingParams);
             // PingHandler.getInstance().addPing(head, additionalInfo, position);

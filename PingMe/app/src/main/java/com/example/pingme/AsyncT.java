@@ -42,7 +42,7 @@ class AsyncT extends AsyncTask<String,Void,Void> {
 
         authUser = pingParams[3];
 
-        androidId = pingParams[4];
+        // androidId = pingParams[4];
 
         // For sending messages to pings topic. Required for messaging multiple devices as targeting whole app isn't supported on Android
         String myTopic = "/topics/pings";
@@ -81,7 +81,7 @@ class AsyncT extends AsyncTask<String,Void,Void> {
         // get reference to 'pings' node
         mFirebaseDatabase = mFirebaseInstance.getReference("pings");
 
-        createPing(text1, text2, pingLocation, androidId);
+        createPing(text1, text2, pingLocation, authUser);
 
         return null;
     }
