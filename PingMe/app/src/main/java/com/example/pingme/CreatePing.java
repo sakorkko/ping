@@ -24,6 +24,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import static java.security.AccessController.getContext;
+
 public class CreatePing extends AppCompatActivity {
 
     private MapMaker mapMine;
@@ -102,6 +104,10 @@ public class CreatePing extends AppCompatActivity {
         startActivity(new Intent(CreatePing.this, PingList.class));
         finish();
     }
+    public void openProfile(View v){
+        startActivity(new Intent(CreatePing.this, profile.class));
+        finish();
+    }
 
 
     public void mark(View v) {
@@ -157,7 +163,7 @@ public class CreatePing extends AppCompatActivity {
             String additionalInfo = String.valueOf(info.getText());
             LatLng position = mapMine.getPosition();
             String positionString = String.valueOf(position.latitude) + "," + String.valueOf(position.longitude);
-            String[] pingParams = { head, additionalInfo, positionString, authUser };
+            String[] pingParams = { head, additionalInfo, positionString, authUser, androidId };
             AsyncT asyncT = new AsyncT();
             asyncT.execute(pingParams);
             // PingHandler.getInstance().addPing(head, additionalInfo, position);
