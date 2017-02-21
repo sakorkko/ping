@@ -37,9 +37,12 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
-        <meta-data android:name="com.google.android.gms.version"
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <activity android:name=".StartPage"
+
+        <activity
+            android:name=".StartPage"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,12 +67,15 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".CreatePing"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".PingList"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".PingInfo"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".CreatePing"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PingList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PingInfo"
+            android:screenOrientation="portrait" />
 
         <!--
         <service
@@ -80,15 +86,16 @@
         </service>
         -->
 
-        <service
-            android:name=".MyFirebaseInstanceIDService">
+        <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        
-        <activity android:name=".pop_up"
-            android:theme="@style/AppTheme.popper">
-        </activity>
+
+        <activity
+            android:name=".pop_up"
+            android:theme="@style/AppTheme.popper"></activity>
+        <activity android:name=".profile"></activity>
     </application>
+
 </manifest>
