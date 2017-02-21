@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -40,7 +41,12 @@ import com.example.pingme.MapMaker;
 import com.example.pingme.Pings;
 import com.example.pingme.PingHandler;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static java.security.AccessController.getContext;
 
 
 public class StartPage extends AppCompatActivity{
@@ -49,14 +55,21 @@ public class StartPage extends AppCompatActivity{
     PingHandler pingHandler = PingHandler.getInstance();
     private static final String TAG = "StartPage";
 
+    private DatabaseReference usersRef;
     private DatabaseReference pingsRef;
+
+    private FirebaseDatabase mFirebaseInstance;
 
     private ChildEventListener listener;
     private FirebaseAuth mAuth;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    private String authUser;
+
     private String estTime;
+
+    // private String androidId = Settings.Secure.ANDROID_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +101,32 @@ public class StartPage extends AppCompatActivity{
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
+                    authUser = user.getUid();
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    usersRef = FirebaseDatabase.getInstance().getReference("users");
+
+                    usersRef.child(authUser).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            if (snapshot.getValue() != null) {
+                                String userid = snapshot.getKey();
+                                Log.d(TAG, "User found in database, userid: " + userid);
+                            } else {
+                                Log.d(TAG, "User not found in database, Creating new User");
+                                mFirebaseInstance = FirebaseDatabase.getInstance();
+                                // get reference to 'users' node
+                                usersRef = mFirebaseInstance.getReference("users");
+
+                                createUser();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            System.err.println("Listener was cancelled");
+                        }
+                    });
+
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -231,6 +269,15 @@ public class StartPage extends AppCompatActivity{
                     }
                 });
         // [END signin_anonymously]
+    }
+
+    private void createUser() {
+
+        List<String> friends = Arrays.asList();
+
+        User user = new User("default", authUser, FirebaseInstanceId.getInstance().getToken(), friends);
+
+        usersRef.child(authUser).setValue(user);
     }
 
     /*
