@@ -20,7 +20,7 @@
         android:layout_centerHorizontal="true">
 
         <TextView
-            android:text="Are you sure???"
+            android:text="Are you sure?"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
@@ -37,7 +37,7 @@
                 android:text="YES"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#7cfc00"
+                android:background="@android:color/holo_green_light"
                 android:id="@+id/YES"
                 android:layout_marginEnd="5sp"
                 android:onClick="clickYes"
@@ -47,7 +47,7 @@
                 android:text="NO"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#ff00"
+                android:background="@android:color/holo_red_light"
                 android:id="@+id/NO"
                 android:layout_marginStart="5sp"
                 android:onClick="clickNo"

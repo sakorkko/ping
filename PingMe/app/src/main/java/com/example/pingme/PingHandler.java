@@ -61,7 +61,7 @@ public class PingHandler{
     }
 
     public Long[] getTimestamps(){
-        Long[] timestamps = new Long[] list.length];
+        Long[] timestamps = new Long[list.length];
         for (int i = 0; i<list.length; i++){
             timestamps[i] = list[i].getTimestamp();
         }

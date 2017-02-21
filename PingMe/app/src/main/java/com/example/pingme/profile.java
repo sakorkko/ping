@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class profile extends AppCompatActivity {
 
-    private User mProfile
+    private User mProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
