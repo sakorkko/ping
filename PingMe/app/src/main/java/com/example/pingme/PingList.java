@@ -20,13 +20,13 @@ public class PingList extends ListActivity {
                 android.R.layout.simple_list_item_1, list);
         listView1.setAdapter(adapter);
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            public void onItemClick(AdapterView < ? > parent, View view,int position, long id){
+            public void onItemClick(AdapterView < ? > parent, View view, int position, long id){
                 final String selected = (String) parent.getItemAtPosition(position);
                 Log.d("PASSER", selected);
                 Intent i = new Intent(getApplicationContext(), PingInfo.class);
                 i.putExtra("name", selected);
                 i.putExtra("info", PingHandler.getInstance().getInfos()[position]);
-                i.putExtra("id", String.valueOf(position));
+                i.putExtra("id", PingHandler.getInstance().getThisId(position));
                 startActivity (i);
             }
         }
@@ -39,4 +39,9 @@ public class PingList extends ListActivity {
     public void openStart(View v) {
         finish();
     }
+
+/*    public void openProfile(View v){
+        startActivity(new Intent(PingList.this, profile.class));
+        finish();
+    }*/
 }

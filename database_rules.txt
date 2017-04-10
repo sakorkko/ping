@@ -1,0 +1,16 @@
+{
+  "rules": {
+    ".read": true,
+    "pings": {
+      ".read": true,
+      ".write": "auth != null",
+      "$pingid": {
+        ".read": "auth != null",
+        ".write": "auth != null && (!data.exists() || data.child('sender').val() === auth.uid) && newData.hasChild('sender')",
+        "sender": {
+          ".write": "newData.val() === auth.uid"
+        }
+      }
+    }
+  }
+}

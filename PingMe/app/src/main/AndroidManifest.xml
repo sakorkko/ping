@@ -31,7 +31,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StartPage">
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_ic_notification" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".StartPage"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -55,12 +67,36 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".CreatePing" />
-        <activity android:name=".PingList" />
-        <activity android:name=".PingInfo" />
-        <activity android:name=".pop_up"
-            android:theme="@style/AppTheme.popper">
-        </activity>
+        <activity
+            android:name=".CreatePing"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PingList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PingInfo"
+            android:screenOrientation="portrait" />
+
+        <!--
+        <service
+            android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        -->
+
+        <service android:name=".MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".pop_up"
+            android:theme="@style/AppTheme.popper" />
+        <activity android:name=".profile" />
+        <activity android:name=".pop_up_signing"></activity>
     </application>
 
 </manifest>

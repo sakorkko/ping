@@ -8,8 +8,10 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+
+
+>>>>>>> a23204c4500588b0b428e1d1180fb45bd5c6465f
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,8 +34,9 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
     private LatLng coordinates;
     private boolean clickable = true;
     private String infoTitle;
+    private String myId;
 
-    public MapMaker(Context cont, boolean draw, int id){
+    public MapMaker(Context cont, boolean draw, int id){        //creates map with all the markers or none
         mCont = cont;
         looker = new GpsTracker(cont);
         original = (Activity) cont;
@@ -50,8 +53,9 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
 
     }
 
-    public MapMaker(Context cont, LatLng coordinate, String title, int id){           //constructor for ping info activity
+    public MapMaker(Context cont, LatLng coordinate, String title, int id, String pingId){           //constructor for ping info activity, one marker
         mCont = cont;
+        myId = pingId;
         looker = new GpsTracker(cont);
         original = (Activity) cont;
         lats = new LatLng[0];
@@ -69,7 +73,7 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         myMap = mapster;
 
         if(myMap != null){
-            myMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter(){
+            myMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter(){   //info window that opens when clicked
 
                 @Override
                 public View getInfoWindow(Marker marker) {
@@ -77,7 +81,7 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
                 }
 
                 @Override
-                public View getInfoContents(Marker marker) {
+                public View getInfoContents(Marker marker) {    //gets layout for info window
                     View looker = original.getLayoutInflater().inflate(R.layout.info_screen, null);
 
                     TextView window = (TextView) looker.findViewById(R.id.textView4);
@@ -87,14 +91,14 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
                 }
             });
         }
-        looker.getLocation();
-        if (coordinates == null) {
+        looker.getLocation();   //gets gps location
+        if (coordinates == null) {  // if coordinates weren't given, go to gps location
             coordinates = new LatLng(looker.getLatitude(), looker.getLongitude());
         }
         else{
-            setMarkThere(infoTitle, 0, coordinates);
+            setMarkThere(infoTitle, myId, coordinates);     //sets marker on start location for ping info activity
         }
-        LatLng university = new LatLng(65.0593186, 25.4662925);
+        LatLng university = new LatLng(65.0593186, 25.4662925);     // university coordinates
         goTo(coordinates,15);         //sets the map current position
 
 
@@ -102,7 +106,7 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         Log.d("Longitude", String.valueOf(looker.getLongitude()));
 
         for (int i = 0; i < titles.length; i++ ){
-            setMarkThere(titles[i], i, lats[i]);
+            setMarkThere(titles[i], String.valueOf(i), lats[i]);
         }
 
         if(clickable) {         //if map is on ping info activity, info click shouldn't work
@@ -116,10 +120,9 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         final String selected = (String) marker.getTag();
         Intent i = new Intent(mCont, PingInfo.class);
         i.putExtra("name", selected);
-        String snippet = marker.getSnippet();
+        String snippet = marker.getSnippet();       //ping id
         i.putExtra("id", snippet);
-        int id = Integer.parseInt(snippet);
-        snippet = PingHandler.getInstance().getInfos()[id];
+        snippet = PingHandler.getInstance().getInfo(snippet);       //finds ping from pinghandler and returns it info
         i.putExtra("info", snippet);
         mCont.startActivity (i);
     }
@@ -135,13 +138,21 @@ public class MapMaker extends FragmentActivity implements OnMapReadyCallback, Go
         marker.setTag(title);
     }
 
-    public void setMarkThere(String title, int id,LatLng ll){      //set marker on specific coordinates
-        Marker marker =  myMap.addMarker(new MarkerOptions().position(ll).title(title).snippet(String.valueOf(id)));
+    public void setMarkThere(String title, String id,LatLng ll){      //set marker on specific coordinates
+        Marker marker =  myMap.addMarker(new MarkerOptions().position(ll).title(title).snippet(id));
         marker.setTag(title);
     }
 
     public LatLng getPosition(){
         return myMap.getCameraPosition().target;
+    }
+
+    public LatLng getGps(){
+        return new LatLng(looker.getLatitude(), looker.getLongitude());
+    }
+
+    public void updatePosition(){
+        looker.updateLoc();
     }
 
 
